@@ -1,0 +1,393 @@
+title: 频繁项数据挖掘
+author: helingfeng
+tags: []
+categories: []
+date: 2018-04-02 16:42:00
+---
+### 时代的变迁
+
+- 曾经我听一个外国人说过这样一句话，翻译过来是这样的意思：`程序员`就好比`建筑工人`，如果你不懂数据挖掘与机器学习，那你是一个`泥瓦工`，反之，你是一位掌握`蓝图`的工程师。
+
+### 数据挖掘 FPGrowth
+
+#### **涉及算法**
+
+- `Apriori` 算法
+- `FPTree` 算法
+- 至于其他算法我也没有研究～
+
+#### **Apriori算法**
+
+Rakesh Agrawal 和 RamakrishnanSkrikant 提出的一种具有影响力的挖局布尔关联规则的频繁项集的算法。
+
+- **算法原理讲解**
+
+假设我们有一家商店，商店有四款产品`A`,`B`,`C`,`D`;
+那么所有商品的无序组合方式有`15`种(2^4-1);
+
+```
+A B C D 
+AB AC AD BC BD CD 
+ABC ABD ACD BCD
+ABCD
+```
+
+最`暴力`的频繁项挖掘算法，可以遍历所有的组合方式，但是组合方式随商品数量增长成`指数`，所以当商品数量较多时，算法的效率是非常低的。
+
+ 科学家发现一种所谓的Apriori原理，可以帮助我们减少计算量。
+ `Apriori原理`是说如果某个项集是频繁的，那么它的所有子集也是频繁的。更常用的是它的逆否命题，即如果一个项集是非频繁的，那么它的所有超集也是非频繁的。
+
+- **基本概念**
+
+ - `支持度` support=P(AB) 简单来说是指事件A和事件B同时发生的概率
+ - `置信度` confidence=P(AB)/P(A) 表示所有商品交易中有10%顾客同时买了A商品，并且买B的顾客有50%
+ - `K项集` K(n)项集满足支持度阈值的必要条件K(n-1)子项集也是频繁项集。
+
+- **算法思路**
+
+它使用一种称为逐层搜索的迭代方法，K(n)项集合用于探索K(n+1)集合。
+
+```
+ 1. 首先，确定频繁规则`支持度` support=50%
+ 2. 找出频繁项候选`K1`集，排除支持度阈值不满足的组合，得到频繁项集`L1`
+ 3. 根据`L1`产生候选频繁项集`K2`
+ 4. 重复步骤2和步骤3，直到`Ln`项集合无法再产生候选频繁项
+```
+
+- **举个栗子**
+  - 假设支持度min_support=30%
+  - 假设现在有5个顾客的订单记录
+
+| 顾客名称  | 订单商品列表  |
+| ------------ | ------------ |
+| 张三  | A B C|
+| 李四  | B C D  |
+| 王五  | A C  |
+| 老六  | B C  |
+| 陈七  | E C D |
+
+---------
+
+a. **跟据购买记录的订单列表生产候选频繁项K1。如下表格，**
+
+| 候选频繁项 |  支持度数  |
+| ------------ | ------------ |
+| {A}  |  2 |
+| {B}  |  3 |
+| {C}  |  5 |
+| {D}  |  2 |
+| {E}  |  1 |
+
+---------
+
+b. **根据MinSupport=30%得出频繁项集L1**
+
+
+| 频繁项 |  支持度数  |
+| ------------ | ------------ |
+| {A}  |  2 |
+| {B}  |  3 |
+| {C}  |  5 |
+| {D}  |  2 |
+
+---------
+
+c. **再以L1组合产生候选频繁集K2**
+
+| 候选频繁项 |  支持度数  |
+| ------------ | ------------ |
+| {A B}  |  1 |
+| {A C}  |  2 |
+| {A D}  |  0 |
+| {B C}  |  3 |
+| {B D}  |  1 |
+| {C D}  |  2 |
+
+---------
+
+e. **根据MinSupport=30%得出频繁项集L2，并输出**
+
+| 频繁项 |  支持度数  |
+| ------------ | ------------ |
+| {A C}  |  2 |
+| {B C}  |  3 |
+| {C D}  |  2 |
+
+---------
+
+f. **再以L2组合产生候选频繁集K3**
+
+| 候选频繁项 |  支持度数  |
+| ------------ | ------------ |
+| {A B C}  |  1 |
+| {A B D}  |  0 |
+| {A C D}  |  0 |
+| {B C D}  |  1 |
+
+---------
+
+e. **根据MinSupport=30%得出频繁项集L3 = {} 空，算法结束**
+
+最后得到`频繁项集`为
+
+| 频繁项 |  支持度数  |
+| ------------ | ------------ |
+| {A C}  |  2 = 40%顾客同时购买A也购买C |
+| {B C}  |  3 = 60%顾客同时购买B也购买C |
+| {C D}  |  2 = 40%顾客同时购买C也购买D |
+
+---------
+
+到这里已经完成了我们的频繁项挖掘工作，Apriori算法其实还挺简单理解的。
+一切东西都是从简单开始的，从简到繁，学习也是这样，不然一开始就被概念吓倒，以后还会有精力和兴趣吗？
+
+说好的附PHP源码呢？
+
+个人编码能力有限，在此献丑了
+
+```php
+<?php
+
+/**
+ * Apriori 算法
+ *
+ * Created by PhpStorm.
+ * User: helingfeng
+ * Date: 2017-11-30
+ */
+
+// 1.假设现在有5个顾客的订单记录
+// 2.假设支持度min_support=30%
+$usersNum = 5;
+$minSupportPercent = 0.3;
+$minSupport = ceil($minSupportPercent * 5);
+$ordersForGoods = [
+    ['A', 'B', 'C'],
+    ['B', 'C', 'D'],
+    ['A', 'C'],
+    ['B', 'C'],
+    ['E', 'C', 'D'],
+];
+$GLOBALS['combineSets'] = [];
+
+// 排列组合
+function combine($source = [], $num = 0, $target = [])
+{
+    if ($num == count($target)) {
+        array_push($GLOBALS['combineSets'], $target);
+    } else {
+        foreach ($source as $key => $value) {
+            $g = $target;
+            $b = $source;
+            array_push($g, $value);
+            $b = array_slice($b, $key + 1);
+            combine($b, $num, $g);
+        }
+    }
+}
+
+//支持度过滤
+function filterBySupport($orders, $sets, $support)
+{
+    $nSets = [];
+    foreach ($sets as $items) {
+        $min = 0;
+        foreach ($orders as $order) {
+            if (validSubSets($order, $items)) {
+                $min++;
+            }
+        }
+        if ($min >= $support) {
+            array_push($nSets, [$items, $min]);
+        }
+    }
+    return $nSets;
+}
+
+//频繁项判断
+function validSubSets($sets, $subSets)
+{
+    $valid = true;
+    foreach ($subSets as $item) {
+        if (false === array_search($item, $sets)) {
+            $valid = false;
+            break;
+        }
+    }
+    return $valid;
+}
+
+//获取k1项集
+function getGoodsArr($orders)
+{
+    $goodsArr = [];
+    foreach ($orders as $order) {
+        foreach ($order as $goods) {
+            if (false === array_search($goods, $goodsArr)) {
+                array_push($goodsArr, $goods);
+            }
+        }
+    }
+    return $goodsArr;
+}
+
+$dimension = 1;
+do {
+    $goods = getGoodsArr($ordersForGoods);
+    combine($goods, $dimension);
+    $sets = filterBySupport($ordersForGoods, $GLOBALS['combineSets'], $minSupport);
+	//若集合为空，结束循环
+    if (count($sets) <= 0) {
+        break;
+    } else {
+        if ($dimension != 1) {
+            echo json_encode($sets, JSON_UNESCAPED_UNICODE);
+        }
+    }
+	$GLOBALS['combineSets'] = [];
+    $dimension++;
+} while (true);
+
+//output 结果
+[[["A","C"],2],[["B","C"],3],[["C","D"],2]]
+
+```
+> 代码下载地址： [http://wiki.helingfeng.com/docs/show/4](http://wiki.helingfeng.com/docs/show/4)
+
+
+#### **FPTree算法**
+
+- **算法原理讲解**
+Apriori算法虽然实现简单，但是从算法的效率来看，每次迭代都需要重复遍历，对`I\O`的资源消耗是巨大的。而基于Apriori改进的FPTree算法，使用`树结构`进行巧妙临时存储，`无论多少数据，只需要扫描两次数据集`。
+
+- **基本概念**
+  - `表头项` 记录了所有的事件频繁集出现的次数，并删除支持度低于阈值的项按照次数降序排列。
+  - `FPTree` 频繁聚项会在树结构体现出重叠。
+  
+- **构建FPTree**
+这个是算法就重点的部分。
+还是举一个例子来分析如何构建吧！
+
+假设支持度support=30%
+顾客还是那五个演员，哈哈
+
+| 顾客名称  | 订单商品列表  |
+| ------------ | ------------ |
+| 张三  | A B C|
+| 李四  | B C D  |
+| 王五  | A C  |
+| 老六  | B C  |
+| 陈七  | E C D |
+
+a.第一次扫描所有数据，得到下面表格；商品=>购买次数
+
+| 项  | 支持度  |
+| ------------ | ------------ |
+| A  | 2 |
+| B  | 3 |
+| C  | 5 |
+| D  | 2 |
+| E  | 1 |
+
+b.按支持度降序排序，并过滤MinSupport，得到表头项
+
+| 项  | 支持度  |
+| ------------ | ------------ |
+| C  | 5 |
+| B  | 3 |
+| A  | 2 |
+| D  | 2 |
+
+c.根据表头项重新排序订单数据，并过滤，得到新的订单商品列表，如下
+
+| 顾客名称  | 订单商品列表  |
+| ------------ | ------------ |
+| 张三  | C B A |
+| 李四  | C B D |
+| 王五  | C A |
+| 老六  | C B |
+| 陈七  | C D |
+
+d.第二次扫描所有数据
+
+从张三开始，生成树链图t1
+
+**| 张三  | C B A |**
+
+
+![upload successful](/images/pasted-16.png)
+
+-----
+
+**| 李四  | C B D |**
+
+
+![upload successful](/images/pasted-17.png)
+
+-----
+
+**| 王五  | C A |**
+
+
+![upload successful](/images/pasted-18.png)
+
+-----
+
+**| 老六  | C B |**
+
+
+![upload successful](/images/pasted-19.png)
+
+----
+
+**| 陈七  | C D |**
+
+
+
+![upload successful](/images/pasted-20.png)
+
+----
+
+perfect !
+
+扫描完数据，FP Tree已经构建完毕。
+
+
+#### 挖掘频繁项
+
+费力九牛之力，终于把Tree构造完成。接下去我们怎么去挖掘频繁项呢？
+.....思考十五分
+
+引用文献的一段话，我觉得解释的挺好，`大概原理`，我们首先要从项头表的底部项依次向上挖掘。对于项头表对应于FP树的每一项，我们要找到它的条件模式基。所谓条件模式基是以我们**要挖掘的节点作为叶子节点**所对应的FP子树。得到这个FP子树，我们将**子树中每个节点的的计数设置为叶子节点的计数**，并**删除计数低于支持度的节点**。从这个条件模式基，我们就可以递归挖掘得到频繁项集了。
+
+再看看表头项顺序
+
+| 项  | 支持度  |
+| ------------ | ------------ |
+| C  | 5 |
+| B  | 3 |
+| A  | 2 |
+| D  | 2 |
+
+**依次从 D=>A=>B=>C 拆解频繁树，通过minSupport过滤得到频繁项**
+
+1. 首先，拆解D得到两个候选频繁项{C:2,D:2},{C:1,B:1,D:1}；跟据候选项迭代生成FP-tree，最后得到频繁项{C:2,D:2}
+2. 其次，拆解A得到两个候选频繁项{C:2,A:2},{C:1,B:1,A:1}；跟据候选项迭代生成FP-tree，最后得到频繁项{C:2,A:2}
+3. 再次，拆解B得到两个候选频繁项{C:3,B:3}；；跟据候选项迭代生成FP-tree，最后得到频繁项{C:3,B:3}
+3. 最后，C就不需要拆解了；
+
+**FPTree算法最后得到频繁项集**
+{C:3,B:3},{C:2,D:2},{C:2,A:2}
+
+源代码正在编写中，后面学习章节补上....
+
+> 平凡之路也会有不平凡的机遇
+
+> 希望大家看完我的文章能有所收获，这就是我的最大荣幸！！！
+
+
+## 参考文献，感谢作者
+
+- [http://www.cnblogs.com/pinard/p/6293298.html](http://www.cnblogs.com/pinard/p/6293298.html)
+- [https://www.cnblogs.com/zhengxingpeng/p/6679280.html](https://www.cnblogs.com/zhengxingpeng/p/6679280.html)
+- 《数据挖掘算法导论》
