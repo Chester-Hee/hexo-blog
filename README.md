@@ -1,6 +1,13 @@
 # Hexo 博客文档
 
-- 安装即用
+```
+hexo server &
+```
 
-![tim 20180409133727](https://user-images.githubusercontent.com/4921878/38481075-9024f624-3bfb-11e8-9314-c7588e64560a.png)
+- 一键安装
+- 无需数据库
+- 主题丰富
+- 个性创意
+
+![tim 20180409134239](https://user-images.githubusercontent.com/4921878/38481166-f8245df0-3bfb-11e8-8767-ea5d6c662553.png)
 
