@@ -13,7 +13,8 @@ date: 2018-04-09 10:56:00
 
 - https://github.com/tmux/tmux/releases
 
-linux用户选择下载tar.gz https://github.com/tmux/tmux/archive/2.7.tar.gz
+linux用户选择下载tar.gz 
+https://github.com/tmux/tmux/archive/2.7.tar.gz
 
 ```shell
 # 安装依赖
