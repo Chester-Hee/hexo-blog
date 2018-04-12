@@ -25,9 +25,12 @@ explain 可以知道什么时候必须为表加入索引以得到一个使用索
 - Extra： 执行情况的说明和描述
 
 ```sql
-EXPLAIN SELECT admin_users.username,admin_roles.name FROM admin_users
-  LEFT JOIN admin_role_users ON admin_users.id = admin_role_users.user_id
-  INNER JOIN admin_roles ON admin_roles.id = admin_role_users.role_id
+EXPLAIN SELECT admin_users.username,admin_roles.name 
+	FROM admin_users
+  	LEFT JOIN admin_role_users 
+    	ON admin_users.id = admin_role_users.user_id
+  	INNER JOIN admin_roles 
+    	ON admin_roles.id = admin_role_users.role_id
 ```
 
 
