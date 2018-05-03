@@ -49,7 +49,7 @@ Docker 快速搭建`Nginx` `MySQL` `PHP` 开发环境，并提供丰富的支持
 
 可以看到下面成功页面 php_info
 
-![demo](./demo.png)
+![demo](https://github.com/helingfeng/dnmp/raw/master/demo.png)
 
 ### 选择其他的 PHP version?
 
