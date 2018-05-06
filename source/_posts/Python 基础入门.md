@@ -45,7 +45,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 Linux Mac Window 安装都非常简单
 
-![ide](/image/screen_1.png)
+![ide](/images/screen_1.png)
 
 感觉 UI 高端大气上档次有木有，瞬间激起对 Python 的兴趣。
 
