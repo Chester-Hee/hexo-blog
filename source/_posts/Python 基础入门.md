@@ -1,3 +1,12 @@
+title: Python 基础环境搭建
+author: helingfeng
+tags:
+  - Python
+categories:
+  - Python IDE
+date: 2018-05-06 12:09:00
+---
+
 ## Python 基础入门
 
 ### 环境搭建
