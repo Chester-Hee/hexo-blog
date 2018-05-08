@@ -1,6 +1,9 @@
 title: virtualenv 环境下使用 matplotlib 绘图出现异常
 author: helingfeng
-tags: ['PyCharm','virtualenv','matplotlib']
+tags: 
+  - PyCharm
+  - virtualenv
+  - matplotlib
 categories:
   - matplotlib
 date: 2018-05-08 16:46:00
