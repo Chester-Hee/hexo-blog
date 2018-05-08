@@ -55,6 +55,6 @@ Set the back end of macosx that is differ compare with other windows or linux os
 
 ## 再次运行
 
-![screen_2.png](/images/screen_2.png)
+![ide](/images/screen_2.png)
 
 
