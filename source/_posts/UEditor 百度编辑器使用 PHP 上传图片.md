@@ -57,7 +57,7 @@ var ue = UE.getEditor('content',{
 
 时序图：
 
-!(screen)[/images/screen_4.png]
+![screen](/images/screen_4.png)
 
 ### PHP 后端代码
 
