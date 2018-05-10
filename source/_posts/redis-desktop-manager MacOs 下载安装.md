@@ -1,0 +1,32 @@
+title: redis-desktop-manager MacOs 下载安装
+author: helingfeng
+tags:
+  - Redis
+categories:
+  - Redis
+  - MacOs
+date: 2018-05-10 15:12:00
+---
+## Redis Desktop Manager
+
+Redis 可视化管理，最好的开源免费工具，没有之一
+
+![screen](/images/screen_14.png)
+
+## redis-desktop-manager-0.9.1.37.dmg 下载地址
+
+redis-desktop-manager-0.9.1.37.dmg  
+百度云盘下载地址：https://pan.baidu.com/s/1l4zLNEyIpG1arNYkSFY0Xw
+
+## 其他版本下载 / 源码编译安装
+
+Release地址：https://github.com/uglide/RedisDesktopManager/releases
+
+
+
+
+
+
+
+
+
