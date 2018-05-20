@@ -135,7 +135,3 @@ $this->sendContent();
 ```
 
 `$this->sendContent()`  其实就是 echo $this->content;
-
-经过一次流程的分解，对Laravel清晰了许多。content;
-
-经过一次流程的分解，对Laravel清晰了许多。�
