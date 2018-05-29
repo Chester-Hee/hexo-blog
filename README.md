@@ -1,9 +1,22 @@
 # Hexo 博客文档
 
-https://www.helingfeng.com/
+博客访问地址：https://www.helingfeng.com/
+
+## 如何搭建
+
+### 安装工具
+
+- nodejs [sudo apt-get install nodejs / brew install nodejs]
+- hexo [https://hexo.io/]
+
+### 启动服务
 
 ```
-hexo server &
+$ hexo server
 ```
-![tim 20180409134239](https://user-images.githubusercontent.com/4921878/38481166-f8245df0-3bfb-11e8-8767-ea5d6c662553.png)
+
+![](demo.png)
+
+
+
 
