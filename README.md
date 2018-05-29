@@ -2,8 +2,7 @@
 
 博客访问地址：https://www.helingfeng.com/
 
-## 如何搭建
-
+---
 ### 安装工具
 
 - nodejs [sudo apt-get install nodejs / brew install nodejs]
