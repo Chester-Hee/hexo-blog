@@ -81,6 +81,12 @@ admin:
   password_hash: $2a$10$OuBo2vc42oQzoQmkgzZyEu1erH4CoqHPGXIvwToPt7iPbeEZHuFdS
   secret: my super secret phrase
 
+translate_title:
+  translate_way: google    #google | baidu | youdao
+  youdao_api_key: XXX
+  youdao_keyfrom: XXX
+  is_need_proxy: false     #true | false
+  proxy_url: http://localhost:8123
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
