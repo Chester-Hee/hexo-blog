@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 ---
 title: 关于我
 translate_title: about-me
-=======
-title: 关于我的
->>>>>>> 367bb8af54fd373cf8a4454f7d9862532718ab65
 date: 2018-04-02 16:14:37
 ---
 2015年毕业于"桂林理工大学"
