@@ -1,8 +1,10 @@
+---
 title: PHP 精度问题
 author: helingfeng
 tags: []
 categories:
   - PHP
+translate_title: php-precision-issues
 date: 2018-04-02 17:06:00
 ---
 

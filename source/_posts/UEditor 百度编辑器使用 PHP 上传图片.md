@@ -1,3 +1,4 @@
+---
 title: UEditor 百度编辑器使用 PHP 上传图片
 author: helingfeng
 tags:
@@ -5,6 +6,7 @@ tags:
 categories:
   - UEditor
   - PHP
+translate_title: ueditor-baidu-editor-uploads-images-using-php
 date: 2018-05-09 15:12:00
 ---
 ## 什么是 UEditor

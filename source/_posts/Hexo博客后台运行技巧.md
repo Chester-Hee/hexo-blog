@@ -1,8 +1,10 @@
+---
 title: Hexo博客后台运行技巧
 author: helingfeng
 tags: []
 categories:
   - Hexo
+translate_title: hexo-blog-background-running-skills
 date: 2018-04-02 17:54:00
 ---
 安装并运行hexo博客后，一般教程都会告诉运行命令是:hexo s,但是关掉Terminal，进程也就结束了，对于一个希望永远运行的服务器来说是不可接受的。

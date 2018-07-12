@@ -1,9 +1,11 @@
+---
 title: JavaScript 2048智力游戏
 author: helingfeng
 tags:
   - 游戏
 categories:
   - JavaScript
+translate_title: javascript-2048-puzzle-game
 date: 2018-04-02 17:09:00
 ---
 #### 编码流程

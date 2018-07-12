@@ -1,8 +1,10 @@
+---
 title: Simple Factory 简单工厂模式（创建型）
 author: helingfeng
 tags: []
 categories:
   - 设计模式
+translate_title: simple-factory-mode-created
 date: 2018-04-02 15:22:00
 ---
 ### 简介

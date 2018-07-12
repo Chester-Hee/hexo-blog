@@ -1,9 +1,11 @@
+---
 title: Laravel 源码分析之请求的生命周期
 author: helingfeng
 tags: []
 categories:
   - Laravel
   - 源码分析
+translate_title: laravel-source-code-analysis-request-life-cycle
 date: 2018-04-09 19:13:00
 ---
 ## Laravel 源码分析之请求生命周期

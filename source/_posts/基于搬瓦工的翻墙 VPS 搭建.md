@@ -1,3 +1,4 @@
+---
 title: 基于搬瓦工的翻墙 VPS 搭建
 author: helingfeng
 tags:
@@ -5,6 +6,7 @@ tags:
 categories:
   - VPS
   - 翻墙
+translate_title: vps-construction-based-on-bricklayers
 date: 2018-05-10 19:12:00
 ---
 ## 购买一台外国的 VPS 服务器

@@ -1,7 +1,9 @@
+---
 title: Nginx 启用安全https
 author: helingfeng
 tags: []
 categories: []
+translate_title: nginx-enables-secure-https
 date: 2018-04-02 15:51:00
 ---
 ## 安全https解决方案

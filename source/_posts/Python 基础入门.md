@@ -1,9 +1,11 @@
+---
 title: Python 基础环境搭建
 author: helingfeng
 tags:
   - Python
 categories:
   - Python IDE
+translate_title: python-basic-environment-to-build
 date: 2018-05-06 12:09:00
 ---
 

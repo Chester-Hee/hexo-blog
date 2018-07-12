@@ -1,8 +1,10 @@
+---
 title: PHP自定义Composer扩展包
 author: helingfeng
 tags: []
 categories:
   - Composer
+translate_title: php-custom-composer-expansion-pack
 date: 2018-04-02 15:50:00
 ---
 ### 前言

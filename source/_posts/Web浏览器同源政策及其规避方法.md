@@ -1,8 +1,10 @@
+---
 title: Web浏览器同源政策及其规避方法
 author: helingfeng
 tags: []
 categories:
   - HTTP
+translate_title: web-browser-same-origin-policy-and-its-evasion-method
 date: 2018-04-02 15:41:00
 ---
 > 文章参考： [http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html](http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html "http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html")

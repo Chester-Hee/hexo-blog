@@ -1,3 +1,4 @@
+---
 title: tmux 终端分屏神器
 author: helingfeng
 tags:
@@ -5,6 +6,7 @@ tags:
 categories:
   - linux
   - tmux
+translate_title: tmux-terminal-split-screen-artifact
 date: 2018-04-09 10:56:00
 ---
 ## tmux 终端分屏神器

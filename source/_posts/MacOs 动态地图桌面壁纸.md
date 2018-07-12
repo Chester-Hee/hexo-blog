@@ -1,9 +1,11 @@
+---
 title: MacOs 动态地图桌面壁纸
 author: helingfeng
 tags:
   - 壁纸
 categories:
   - Python
+translate_title: macos-dynamic-map-desktop-wallpaper
 date: 2018-05-09 15:12:00
 ---
 ## 炫酷动态地球壁纸配置

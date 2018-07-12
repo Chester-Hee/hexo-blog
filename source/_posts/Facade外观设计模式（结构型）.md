@@ -1,8 +1,10 @@
+---
 title: Facade外观设计模式（结构型）
 author: helingfeng
 tags: []
 categories:
   - 设计模式
+translate_title: facade-design-pattern-structural
 date: 2018-04-02 15:39:00
 ---
 ### 目录

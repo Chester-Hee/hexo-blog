@@ -1,8 +1,10 @@
+---
 title: 拒绝服务攻击防范-Nginx
 author: helingfeng
 tags: []
 categories:
   - Nginx
+translate_title: denial-of-service-attack-prevention-nginx
 date: 2018-04-02 15:55:00
 ---
 一个网站性能有限，如果有人恶意去频繁对页面进行刷新，其实对服务器影响是很大的，导致资源使用非常高，直接影响到其他用户的体验。

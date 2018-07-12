@@ -1,4 +1,6 @@
+---
 title: books
+translate_title: books
 date: 2018-04-02 16:02:00
 ---
 ### 求知若渴 stay hungry,stay foolish

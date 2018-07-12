@@ -1,8 +1,10 @@
+---
 title: Factory Method 工厂方法模式（创建型）
 author: helingfeng
 tags: []
 categories:
   - 设计模式
+translate_title: factory-method-pattern-created
 date: 2018-04-02 16:41:00
 ---
 ### 简介

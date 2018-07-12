@@ -1,4 +1,6 @@
-title: about
+---
+title: 关于我
+translate_title: about-me
 date: 2018-04-02 16:14:37
 ---
 2015年毕业于"桂林理工大学"

@@ -1,3 +1,4 @@
+---
 title: Laravel PHP 打包 zip 下载
 author: helingfeng
 tags:
@@ -6,6 +7,7 @@ categories:
   - Laravel
   - PHP
   - zip
+translate_title: laravel-php-package-zip-download
 date: 2018-05-14 15:12:00
 ---
 ## 打包文件夹 zip 

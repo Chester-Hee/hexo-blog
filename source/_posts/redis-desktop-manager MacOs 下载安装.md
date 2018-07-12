@@ -1,3 +1,4 @@
+---
 title: redis-desktop-manager MacOs 下载安装
 author: helingfeng
 tags:
@@ -5,6 +6,7 @@ tags:
 categories:
   - Redis
   - MacOs
+translate_title: redisdesktopmanager-macos-download-and-install
 date: 2018-05-10 15:12:00
 ---
 ## Redis Desktop Manager

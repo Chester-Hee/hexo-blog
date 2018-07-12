@@ -1,3 +1,4 @@
+---
 title: 使用 Jenkins 自动化发布 PHP 项目
 author: helingfeng
 tags:
@@ -5,6 +6,7 @@ tags:
 categories:
   - Jenkins
   - PHP
+translate_title: automatically-publish-php-projects-using-jenkins
 date: 2018-05-10 11:12:00
 ---
 ## 什么是 Jenkins

@@ -1,5 +1,7 @@
+---
 title: Awesome PHP （转载）
 author: John Doe
+translate_title: awesome-php-reproduced
 date: 2018-04-02 15:53:35
 tags:
 ---

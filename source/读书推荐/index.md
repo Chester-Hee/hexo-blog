@@ -1,4 +1,6 @@
+---
 title: 读书推荐
+translate_title: reading-recommendation
 date: 2018-04-02 16:00:34
 ---
 ### 求知若渴 stay hungry,stay foolish

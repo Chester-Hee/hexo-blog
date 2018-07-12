@@ -1,8 +1,10 @@
+---
 title: PHP源码阅读-SAPI
 author: helingfeng
 tags: []
 categories:
   - PHP源码分析
+translate_title: php-source-code-to-read-sapi
 date: 2018-04-02 15:42:00
 ---
 开始之前，先克隆一份源代码：

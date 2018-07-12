@@ -1,8 +1,10 @@
+---
 title: Git 选项 --no-ff
 author: helingfeng
 tags: []
 categories:
   - Git
+translate_title: git-option-noff
 date: 2018-04-10 16:43:00
 ---
 git merge 记得要加上 --no-ff

@@ -1,5 +1,7 @@
+---
 title: JavaScript兼容性解决方式
 author: John Doe
+translate_title: javascript-compatibility-solution
 date: 2018-04-02 17:20:34
 tags:
 ---
