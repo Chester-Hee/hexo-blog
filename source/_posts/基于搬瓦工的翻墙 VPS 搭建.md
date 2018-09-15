@@ -11,9 +11,13 @@ date: 2018-05-10 19:12:00
 ---
 ## 购买一台外国的 VPS 服务器
 
-板瓦工，许多人的选择，稳定经济
+板瓦工，许多人的选择，稳定经济，最重要的是支持"支付宝支付"
 
-https://bandwagonhost.com/aff.php?aff=25516
+- https://bandwagonhost.com/aff.php?aff=25516
+- https://www.bwh1.net/aff.php?aff=25516
+
+第一个链接可能需要翻墙才能访问。
+进入网站后，自己挑选一款服务器，价格都很实惠，最便宜的好像19美元一年。
 
 ## 安装 Shadowsocks Server
 
