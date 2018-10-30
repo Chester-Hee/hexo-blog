@@ -338,3 +338,5 @@ protected function runCommandInBackground(Container $container)
 ```
 
 差别在于 `$this->callAfterCallbacks($container)` ，是否等待当前任务执行完成，如果选择 `runCommandInBackground` 方式运行，任务命令直接传递给操作系统进行执行，然后直接返回，等待操作系统执行完成任务后，会执行另一条命令 `schedule:finish` 通过事件ID进行异步响应对应的任务事件。
+
+3. Closure 定义调度，和命令其他方式定义调度是不相同的，`CallBackEvent` 同步方式执行。
