@@ -208,4 +208,132 @@ protected function spliceIntoPosition($position, $value)
 
 ### 运行事件
 
-...
+启动调度器，使用调度器时，只需将以下`Cron`项目添加到服务器:
+
+```shell
+* * * * * php /path-to-your-project/artisan schedule:run >> /dev/null 2>&1
+```
+上面这个`Cron`会每分钟调用一次`LS`命令调度器。执行`schedule:run`命令时， `LS`会根据你的调度运行预定任务。
+
+让我们带着疑问继续理解`LS`运行事件原理。
+
+#### schedule:run 是什么？
+
+我们看 `Illuminate\Console\Scheduling\ScheduleRunCommand` 代码是怎么写的？和普通自定义`Artisan`命令一样，继承 `Command` 基类。然后具体任务内容在`handle`方法里实现。
+
+```php
+class ScheduleRunCommand extends Command
+{
+    //...
+    public function handle()
+    {
+        foreach ($this->schedule->dueEvents($this->laravel) as $event) {
+            // ...
+            $event->run($this->laravel);
+        }
+        // ...
+    }
+}
+```
+
+`dueEvents` 完成过滤动作 `collect($this->events)->filter->isDue($app)` 使用 `isDue` 方法进行过滤。
+
+```php
+public function isDue($app)
+{
+    if (! $this->runsInMaintenanceMode() && $app->isDownForMaintenance()) {
+        return false;
+    }
+    return $this->expressionPasses() &&
+            $this->runsInEnvironment($app->environment());
+}
+protected function expressionPasses()
+{
+    $date = Carbon::now();
+
+    if ($this->timezone) {
+        $date->setTimezone($this->timezone);
+    }
+
+    return CronExpression::factory($this->expression)->isDue($date->toDateTimeString());
+}
+```
+
+其实原理很简单，方法`expressionPasses`通过`Carbon`第三方扩展包获取当前时间，并与Event实例的`Expression`进行匹对。
+
+```php
+return $this->getNextRunDate($currentDate, 0, true)->getTimestamp() == $currentTime
+```
+
+如果返回`True`，那就表示`Event`需要执行。
+
+```php
+$event->run($this->laravel);
+
+
+public function run(Container $container)
+{
+    if ($this->withoutOverlapping &&
+        ! $this->mutex->create($this)) {
+        return;
+    }
+
+    $this->runInBackground
+                ? $this->runCommandInBackground($container)
+                : $this->runCommandInForeground($container);
+}
+```
+
+`withoutOverlapping` 和 `mutex` 就是在这里控制任务重复执行。
+
+```php
+(new Process(
+    $this->buildCommand(), base_path(), null, null, null
+))->run();
+```
+
+最后，由执行器执行命令任务...done
+
+
+---
+
+
+### 几点疑问？
+
+1.假设每个五分钟执行，比如08:52定义命令调度`Command`到`Schedule`，会在08:57时刻执行？
+
+
+不会，只会在08:55时刻执行，也就是满足时钟的固定周期。
+
+
+2.任务调度的两种执行方式`runCommandInBackground` 与 `runCommandInForeground` 有什么区别？
+
+`runCommandInBackground` 代码如下：
+
+```php
+protected function runCommandInBackground(Container $container)
+{
+    $this->callBeforeCallbacks($container);
+
+    (new Process(
+        $this->buildCommand(), base_path(), null, null, null
+    ))->run();
+}
+```
+
+`runCommandInForeground` 代码如下：
+
+```php
+ protected function runCommandInForeground(Container $container)
+{
+    $this->callBeforeCallbacks($container);
+
+    (new Process(
+        $this->buildCommand(), base_path(), null, null, null
+    ))->run();
+
+    $this->callAfterCallbacks($container);
+}
+```
+
+差别在于 `$this->callAfterCallbacks($container)` ，是否等待当前任务执行完成，如果选择 `runCommandInBackground` 方式运行，任务命令直接传递给操作系统进行执行，然后直接返回，等待操作系统执行完成任务后，会执行另一条命令 `schedule:finish` 通过事件ID进行异步响应对应的任务事件。
