@@ -7,6 +7,7 @@ categories:
   - Crontab
   - Schedule
   - 源码阅读
+translate_title: savour-the-principles-of-laravelschedule-planning-task
 date: 2018-10-30 14:00:00
 ---
 

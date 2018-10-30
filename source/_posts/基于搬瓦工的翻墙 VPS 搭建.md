@@ -6,7 +6,7 @@ tags:
 categories:
   - VPS
   - 翻墙
-translate_title: vps-construction-based-on-bricklayers
+translate_title: based-on-the-wallmoving-work-of-bricklayer-vps
 date: 2018-05-10 19:12:00
 ---
 ## 购买一台外国的 VPS 服务器
