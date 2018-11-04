@@ -301,13 +301,13 @@ public function run(Container $container)
 
 ### 几点疑问？
 
-1.假设每个五分钟执行，比如08:52定义命令调度`Command`到`Schedule`，会在08:57时刻执行？
+**1.假设每个五分钟执行，比如08:52定义命令调度`Command`到`Schedule`，会在08:57时刻执行？**
 
 
 不会，只会在08:55时刻执行，也就是满足时钟的固定周期。
 
 
-2.任务调度的两种执行方式`runCommandInBackground` 与 `runCommandInForeground` 有什么区别？
+**2.任务调度的两种执行方式`runCommandInBackground` 与 `runCommandInForeground` 有什么区别？**
 
 `runCommandInBackground` 代码如下：
 
@@ -337,6 +337,6 @@ protected function runCommandInBackground(Container $container)
 }
 ```
 
-差别在于 `$this->callAfterCallbacks($container)` ，是否等待当前任务执行完成，如果选择 `runCommandInBackground` 方式运行，任务命令直接传递给操作系统进行执行，然后直接返回，等待操作系统执行完成任务后，会执行另一条命令 `schedule:finish` 通过事件ID进行异步响应对应的任务事件。
+差别在于 `$this->callAfterCallbacks($container)` ，是否等待当前任务执行完成，如果选择 `runCommandInBackground` 方式运行，任务命令直接传递给操作系统进行执行，然后直接返回，等待操作系统执行完成任务后，会执行另一条命令 `schedule:finish` 通过事件ID()进行异步响应对应的任务事件。
 
-3. Closure 定义调度，和命令其他方式定义调度是不相同的，`CallBackEvent` 同步方式执行。
+**3.Closure 定义调度，和命令其他方式定义调度是不相同的，`CallBackEvent` 同步方式执行**
