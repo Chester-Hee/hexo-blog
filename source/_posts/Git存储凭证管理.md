@@ -7,6 +7,7 @@ categories:
   - Composer
   - 存储凭证
   - 源码阅读
+translate_title: gittool-storage-credentials
 date: 2018-11-05 14:00:00
 ---
 
