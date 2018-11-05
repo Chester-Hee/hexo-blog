@@ -23,32 +23,42 @@ date: 2018-11-05 14:00:00
 - 如果你使用的是 Mac，Git 还有一种 “osxkeychain” 模式，它会将凭证缓存到你系统用户的钥匙串中。 这种方式将凭证存放在磁盘中，并且永不过期，但是是被加密的，这种加密方式与存放 HTTPS 凭证以及 Safari 的自动填写是相同的。
 - 如果你使用的是 Windows，你可以安装一个叫做 “winstore” 的辅助工具。 这和上面说的 “osxkeychain” 十分类似，但是是使用 Windows Credential Store 来控制敏感信息。 可以在 https://gitcredentialstore.codeplex.com 下载。
 
-更多的介绍：https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%87%AD%E8%AF%81%E5%AD%98%E5%82%A8
+> 更多的介绍：https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%87%AD%E8%AF%81%E5%AD%98%E5%82%A8
 
 ## Composer 使用Git私有库，404 Not Found 无法正常 `Composer Install` 问题
 
-**问题出现描述**
+**我们团队遇到的问题**
 
-假设：
+- 团队有一开发人员`A`使用`mac`环境开发（Git存储凭证`osxkeychain`模式会永久缓存凭证）
+- 我们现在有两个主项目`P1`和`P2`和一个私有扩展库`F3`
+- `A`开发者拥有`P1`和`P2`访问权限，并通过`HTTP`协议`Clone`项目`P1`的源代码（经过了这一步操作，会存储凭证信息）
+- `P2`项目使用PHP语言并通过`Composer`工具管理依赖，其中包含`F3`扩展包
 
-- 团队有两个开发人员，`A`和`B`都是使用`mac`环境（osxkeychain 模式会记录验证信息）进行开发
-
-- 我们现在有两个项目`P1`和`P2`和`P3`
-
-- `A`开发者仅拥有`P1`访问权限，并通过 HTTP协议拉取了`P1`项目代码
-
-- `B`开发者在`P2`项目使用 `Composer` 依赖扩展 `P3` 包 Composer.json（使用 git+http）, 并添加Auth.json文件
-`Composer.json`
+`Composer.json`:
 ```json
 {
   "type": "git",
-  "url": "http://domain/project.git"
+  "url": "http://domain/f3.git"
 }
 ```
 
-当 `A` 用户得到 `P2` 项目时，并使用 `Composer Install`安装依赖会出现 404 Not Found 无法拉取 `P3` 扩展包问题（可以说是Composer没有考虑到的极端情况）
+`Auth.json`:
+```json
+{
+  "http-basic": {
+    "your-domain": {
+      "username": "your-token",
+      "password": "your-password"
+    }
+  }
+}
+```
 
-**解决办法**
+**当`A`用户克隆`P2`项目，并使用`Composer Install`安装依赖会出现异`404 Not Found F3`，无法成功安装`P3`扩展**
+
+我当时很疑惑？为什么不使用`Auth.json`进行验证？实际使用了缓存中凭证，可以说是Composer没有考虑到的极端情况。
+
+**解决办法?**
 
 ### 1.清除Git存储凭证
 
