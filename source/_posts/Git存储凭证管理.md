@@ -26,7 +26,7 @@ date: 2018-11-05 14:00:00
 
 > https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%87%AD%E8%AF%81%E5%AD%98%E5%82%A8
 
-## Composer 使用Git私有库，404 Not Found 无法正常 `Composer Install` 问题
+## Composer 使用Git私有库，`composer install` 404 Not Found 异常问题
 
 **我们团队遇到的问题**
 
@@ -39,7 +39,7 @@ date: 2018-11-05 14:00:00
 ```json
 {
   "type": "git",
-  "url": "http://domain/f3.git"
+  "url": "http://domain/F3.git"
 }
 ```
 
@@ -55,7 +55,7 @@ date: 2018-11-05 14:00:00
 }
 ```
 
-**当`A`用户克隆`P2`项目，并使用`Composer Install`安装依赖会出现异`404 Not Found F3`，无法成功安装`P3`扩展**
+**当`A`用户克隆`P2`项目后使用`composer install`安装依赖会出现异`404 Not Found F3`，无法成功安装`F3`扩展**
 
 我当时很疑惑？为什么不使用`Auth.json`进行验证？实际使用了缓存中凭证，可以说是Composer没有考虑到的极端情况。
 
