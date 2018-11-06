@@ -1,0 +1,55 @@
+body {
+  padding: 0;
+  margin: 0;
+  line-height: $global-lineheight;
+  font-family: $global-font-family;
+  color: $black;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  &:hover {
+    color: $theme-color-hover;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+  font-family: $global-font-family;
+  line-height: $global-lineheight;
+}
+
+// main style
+.main {
+  position: relative;
+  width: $main-content-width;
+  margin: 0 auto;
+  padding: $main-content-padding;
+  box-sizing: border-box;
+}
+
+@include max-screen($toc-max-screen-width) {
+  .post-toc-aside {
+    display: none;
+  }
+}
+
+@include max-screen() {
+  .main {
+    width: 100%;
+    margin-top: 50px;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+
+}
+
+// reset h1-h6
+@each $header, $size in $global-headings {
+  #{$header} {
+    font-size: $size;
+  }
+}

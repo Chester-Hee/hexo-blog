@@ -1,0 +1,33 @@
+<div class="posts">
+    <% page.posts.each(function (post) { %>
+        <article class="post-abstract">
+            <div class="post-title">
+                <h2><a class="post-title-link" href="<%- url_for(post.path) %>"><%= post.title %></a></h2>
+            </div>
+            <div class="post-meta">
+                <span class="post-time"><%- date(post.date, "YYYY-MM-DD")%></span>
+                <% if (post.categories.length){ %>
+                <span class="post-category">
+                    <% post.categories.forEach(function (category) { %>
+                    <a class="category" href="<%= url_for(category.path) %>"><%= category.name %></a>
+                    <% }) %>
+                </span>
+                <% } %>
+            </div>
+            <div class="post-content">
+                <% if (post.excerpt ) {%>
+                    <%- post.excerpt %>
+                    <div class="read-more">
+                        <a href="<%- url_for(post.path)%>" class="read-more-link">
+                            <%- __('Post.readMore')%>
+                            <i class="iconfont icon-readmore"></i>
+                        </a>
+                    </div>
+                <% } else { %>
+                    <%- post.content %>
+                <% } %>
+            </div>
+        </article>
+    <% }) %>
+</div>
+<%- partial('_partial/paginator') %>
