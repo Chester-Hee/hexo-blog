@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 追赶日出日落
-subtitle: 何凌枫的博客
-description: 个人博客
+title: 追赶日落日出
+subtitle:
+description: code farmer.
 keywords:
-author: 何凌枫
+author: Chester-He
 language: zh-Hans
 timezone:
 
