@@ -73,13 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: lemon-lime
-
-# admin
-admin:
-  username: helingfeng
-  password_hash: $2a$10$OuBo2vc42oQzoQmkgzZyEu1erH4CoqHPGXIvwToPt7iPbeEZHuFdS
-  secret: my super secret phrase
+theme: replica
 
 translate_title:
   translate_way: google    #google | baidu | youdao
@@ -92,3 +86,29 @@ translate_title:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type:
+
+# Google Analytics
+ga: # GA code UA-XXXXXXXX-X
+
+#marked setting for markdown
+marked:
+  gfm: true
+  pedantic: false
+  sanitize: false
+  tables: true
+  breaks: true
+  smartLists: true
+  smartypants: true
+
+gcs: # GOOGLE CUSTOM SEARCH
+baidutongji: 66bdd0a984d281716c78a567d1f39e67
+disqus: # DISQUS ID
+
+location: Guang Zhou
+email: dreamhelingfeng@gmail.com
+
+avatar: https://avatars1.githubusercontent.com/u/4921878?s=460&v=4
+social:
+  github: https://github.com/Chester-Hee
+  weibo:
+  linkedin:
