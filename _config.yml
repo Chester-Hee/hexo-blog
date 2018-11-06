@@ -105,9 +105,9 @@ marked:
   smartLists: true
   smartypants: true
 
-gcs: # GOOGLE CUSTOM SEARCH
+gcs: 000269192765580162294:atvqvmcbhhe
 baidutongji: 66bdd0a984d281716c78a567d1f39e67
-disqus: # DISQUS ID
+disqus: blog-nst2eqygcm
 
 location: Guang Zhou
 email: dreamhelingfeng@gmail.com
