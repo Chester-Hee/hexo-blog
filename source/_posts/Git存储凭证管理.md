@@ -1,12 +1,10 @@
 ---
 title: Git-工具 存储凭证
 author: helingfeng
-tags: []
+tags:
+  - Git
 categories:
   - Git
-  - Composer
-  - 存储凭证
-  - 源码阅读
 translate_title: gittool-storage-credentials
 date: 2018-11-05 14:00:00
 ---

@@ -1,12 +1,12 @@
 ---
 title: Laravel-Admin 简介
 author: helingfeng
-tags: []
+tags:
+  - Laravel
 categories:
   - Laravel
-  - Admin
 translate_title: introduction-to-laraveladmin
-date: 2018-04-10 18:38:00
+date: 2018-04-29 18:38:00
 ---
 十分钟构建一个基于`laravel`后台管理系统
 

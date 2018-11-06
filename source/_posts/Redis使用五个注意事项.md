@@ -1,11 +1,12 @@
 ---
 title: Redis使用五个注意事项
 author: helingfeng
-tags: []
+tags:
+  - Redis
 categories:
   - Redis
 translate_title: redis-uses-five-considerations
-date: 2018-04-02 15:54:00
+date: 2018-05-15 15:54:00
 ---
 来源地址：[https://www.quora.com/Redis/What-are-5-mistakes-to-avoid-when-using-Redis](https://www.quora.com/Redis/What-are-5-mistakes-to-avoid-when-using-Redis "https://www.quora.com/Redis/What-are-5-mistakes-to-avoid-when-using-Redis")
 

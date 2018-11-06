@@ -1,11 +1,12 @@
 ---
 title: 终端神器 oh my zsh
 author: helingfeng
-tags: []
+tags:
+  - Linux
 categories:
   - Linux
 translate_title: terminal-artifact-oh-my-zsh
-date: 2018-04-02 15:56:00
+date: 2018-08-02 15:56:00
 ---
 ## 优化命令终端 oh my zsh
 

@@ -1,10 +1,12 @@
 ---
 title: Nginx 启用安全https
 author: helingfeng
-tags: []
-categories: []
+tags:
+  - Nginx
+categories:
+  - Nginx
 translate_title: nginx-enables-secure-https
-date: 2018-04-02 15:51:00
+date: 2018-04-25 15:51:00
 ---
 ## 安全https解决方案
 [Let’s Encrypt](https://certbot.eff.org/all-instructions/#ubuntu-16-04-xenial-nginx "Let’s Encrypt")

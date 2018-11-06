@@ -5,9 +5,8 @@ tags:
   - Redis
 categories:
   - Redis
-  - MacOs
 translate_title: redisdesktopmanager-macos-download-and-install
-date: 2018-05-10 15:12:00
+date: 2018-06-10 15:12:00
 ---
 ## Redis Desktop Manager
 

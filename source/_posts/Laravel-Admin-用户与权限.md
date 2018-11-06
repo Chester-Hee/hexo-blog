@@ -2,14 +2,11 @@
 title: Laravel-Admin 用户与权限
 author: helingfeng
 tags:
-  - roles
-  - permission
+  - Laravel
 categories:
   - Laravel
-  - PHP
-  - Admin
 translate_title: laraveladmin-users-and-permissions
-date: 2018-04-04 09:59:00
+date: 2018-04-27 09:59:00
 ---
 ## Laravel-Admin 用户与权限
 

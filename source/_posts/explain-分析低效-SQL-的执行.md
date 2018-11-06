@@ -1,9 +1,10 @@
 ---
 title: explain 分析低效 SQL 的执行
 author: helingfeng
-tags: []
+tags:
+  - Mysql
 categories:
-  - MySQL
+  - Mysql
 translate_title: explain-analyzing-the-execution-of-inefficient-sql
 date: 2018-04-10 16:47:00
 ---

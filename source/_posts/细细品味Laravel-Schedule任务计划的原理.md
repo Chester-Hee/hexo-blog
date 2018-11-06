@@ -1,12 +1,11 @@
 ---
 title: 细细品味 Laravel-Schedule 计划任务的原理
 author: helingfeng
-tags: []
+tags:
+  - Laravel
+  - Schedule
 categories:
   - Laravel
-  - Crontab
-  - Schedule
-  - 源码阅读
 translate_title: savour-the-principles-of-laravelschedule-planning-task
 date: 2018-10-30 14:00:00
 ---

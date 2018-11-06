@@ -5,9 +5,8 @@ tags:
   - Jenkins
 categories:
   - Jenkins
-  - PHP
 translate_title: publish-php-projects-with-jenkins-automation
-date: 2018-05-10 11:12:00
+date: 2018-06-13 11:12:00
 ---
 ## 什么是 Jenkins
 

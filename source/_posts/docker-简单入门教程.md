@@ -2,11 +2,9 @@
 title: docker 简单入门教程
 author: helingfeng
 tags:
-  - 镜像
-  - 容器
+  - Docker
 categories:
-  - docker
-  - compose
+  - Docker
 translate_title: docker-simple-tutorial
 date: 2018-04-11 18:57:00
 ---

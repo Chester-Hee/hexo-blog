@@ -1,6 +1,9 @@
 ---
 title: docker 搭建LNMP环境
-tags: docker
+tags:
+  - Docker
+categories:
+  - Docker
 translate_title: docker-builds-lnmp-environment
 date: 2018-05-03 21:02:03
 ---

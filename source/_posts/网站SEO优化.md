@@ -1,7 +1,8 @@
 ---
 title: 网站SEO优化方案
 author: helingfeng
-tags: []
+tags:
+  - SEO
 categories:
   - SEO
 translate_title: website-seo-optimization-solution

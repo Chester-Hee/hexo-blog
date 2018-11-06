@@ -2,12 +2,11 @@
 title: Laravel-Admin 第三方云存储OSS
 author: helingfeng
 tags:
-  - 云存储
+  - Laravel
 categories:
   - Laravel
-  - OSS
 translate_title: laraveladmin-thirdparty-cloud-storage-oss
-date: 2018-04-04 10:35:00
+date: 2018-04-28 10:35:00
 ---
 ## Laravel 
 

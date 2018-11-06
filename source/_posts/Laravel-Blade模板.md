@@ -2,8 +2,11 @@
 title: Laravel Blade 模板
 author: helingfeng
 translate_title: laravel-blade-template
-date: 2018-04-10 18:20:49
+date: 2018-05-01 18:20:49
 tags:
+  - Laravel
+categories:
+  - Laravel
 ---
 ## Laravel-Blade 模板引擎
 

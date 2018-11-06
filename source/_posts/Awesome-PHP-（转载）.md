@@ -2,8 +2,11 @@
 title: Awesome PHP （转载）
 author: John Doe
 translate_title: awesome-php-reproduced
-date: 2018-04-02 15:53:35
+date: 2018-04-03 15:53:35
 tags:
+  - PHP
+categories:
+  - PHP
 ---
 # Awesome PHP
 一个PHP资源列表，内容包括：库、框架、模板、安全、代码分析、日志、第三方库、配置工具、Web 工具、书籍、电子书、经典博文等等

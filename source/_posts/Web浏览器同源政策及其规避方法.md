@@ -1,11 +1,12 @@
 ---
 title: Web浏览器同源政策及其规避方法
 author: helingfeng
-tags: []
+tags:
+  - 跨域
 categories:
-  - HTTP
+  - 跨域
 translate_title: web-browser-homology-policy-and-its-avoidance-method
-date: 2018-04-02 15:41:00
+date: 2018-06-12 15:41:00
 ---
 > 文章参考： [http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html](http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html "http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html")
 

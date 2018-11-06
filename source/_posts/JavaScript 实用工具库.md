@@ -1,7 +1,8 @@
 ---
 title: JavaScript 实用工具库
 author: helingfeng
-tags: []
+tags:
+  - JavaScript
 categories:
   - JavaScript
 translate_title: javascript-utility-library

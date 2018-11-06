@@ -1,11 +1,12 @@
 ---
 title: PHP 文件下载乱码
 author: helingfeng
-tags: []
+tags:
+  - PHP
 categories:
   - PHP
 translate_title: php-file-download-garbled
-date: 2018-04-02 15:36:00
+date: 2018-05-02 15:36:00
 ---
 ### download filename
 

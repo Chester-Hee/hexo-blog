@@ -2,10 +2,9 @@
 title: Laravel PHP 导出 csv 文件
 author: helingfeng
 tags:
-  - csv
+  - Laravel
 categories:
   - Laravel
-  - csv
 translate_title: laravel-php-export-csv-file
 date: 2018-05-14 14:12:00
 ---

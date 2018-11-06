@@ -4,7 +4,7 @@ author: helingfeng
 tags:
   - Python
 categories:
-  - Python IDE
+  - Python
 translate_title: python-infrastructure-setup
 date: 2018-05-06 12:09:00
 ---

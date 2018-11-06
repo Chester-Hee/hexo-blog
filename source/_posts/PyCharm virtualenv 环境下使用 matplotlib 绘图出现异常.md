@@ -8,7 +8,7 @@ tags:
 categories:
   - matplotlib
 translate_title: abnormal-use-of-matplotlib-drawing-in-virtualenv-environment
-date: 2018-05-08 16:46:00
+date: 2018-06-08 16:46:00
 ---
 ## 问题: MacOs PyCharm IDE virtualenv 下运行 matplotlib 绘图出现异常
 

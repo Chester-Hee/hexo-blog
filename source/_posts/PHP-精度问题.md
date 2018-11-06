@@ -1,11 +1,12 @@
 ---
 title: PHP 精度问题
 author: helingfeng
-tags: []
+tags:
+  - PHP
 categories:
   - PHP
 translate_title: php-precision-problem
-date: 2018-04-02 17:06:00
+date: 2018-05-22 17:06:00
 ---
 
 > PHP为任意精度数学计算提供了二进制计算器（Binary Calculator），它支持任意大小和精度的数字，以字符串形式描述
