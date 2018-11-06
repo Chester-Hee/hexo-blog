@@ -4,7 +4,7 @@ author: helingfeng
 tags: []
 categories:
   - 设计模式
-translate_title: facade-design-pattern-structural
+translate_title: facade-design-pattern-structure-type
 date: 2018-04-02 15:39:00
 ---
 ### 目录

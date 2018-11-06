@@ -4,7 +4,7 @@ author: helingfeng
 tags: []
 categories:
   - PHP
-translate_title: php-precision-issues
+translate_title: php-precision-problem
 date: 2018-04-02 17:06:00
 ---
 

@@ -4,7 +4,7 @@ author: helingfeng
 tags: []
 categories:
   - Composer
-translate_title: php-custom-composer-expansion-pack
+translate_title: php-custom-composer-extension-package
 date: 2018-04-02 15:50:00
 ---
 ### 前言

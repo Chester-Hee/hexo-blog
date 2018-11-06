@@ -6,7 +6,7 @@ categories:
   - Laravel
   - PHP
   - Admin
-translate_title: laraveladmin-modelgrid-quickly-builds-data-tables
+translate_title: laraveladmin-modelgrid-quickly-build-data-tables
 date: 2018-04-03 18:50:00
 ---
 ## Laravel Admin 快速构建数据表格之 Model-Grid

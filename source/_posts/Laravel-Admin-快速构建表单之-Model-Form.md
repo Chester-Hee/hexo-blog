@@ -6,7 +6,7 @@ categories:
   - Laravel
   - PHP
   - Admin
-translate_title: laravel-admin-quickly-build-form-modelform
+translate_title: laravel-admin-quickly-build-forms-of-modelform
 date: 2018-04-03 19:58:00
 ---
 ## Laravel Admin 快速构建表单之 Model-Form

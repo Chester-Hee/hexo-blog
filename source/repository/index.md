@@ -1,6 +1,6 @@
 ---
 title: repository
-translate_title: repository
+translate_title: database
 date: 2018-04-02 16:14:07
 ---
 #### 项目

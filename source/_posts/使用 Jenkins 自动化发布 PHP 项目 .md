@@ -6,7 +6,7 @@ tags:
 categories:
   - Jenkins
   - PHP
-translate_title: automatically-publish-php-projects-using-jenkins
+translate_title: publish-php-projects-with-jenkins-automation
 date: 2018-05-10 11:12:00
 ---
 ## 什么是 Jenkins

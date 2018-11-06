@@ -4,7 +4,7 @@ author: helingfeng
 tags: []
 categories:
   - 设计模式
-translate_title: factory-method-pattern-created
+translate_title: factory-method-mode-created
 date: 2018-04-02 16:41:00
 ---
 ### 简介
