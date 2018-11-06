@@ -1,0 +1,25 @@
+<%
+var publishTimestamp = page.date.valueOf();
+%>
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    <%= config.author || '' %>
+
+    <span class="post-date float-right" title="{{moment(<%= publishTimestamp %>).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(<%= publishTimestamp %>).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1><%= page.title || 'Untitle' %></h1>
+    <%- page.content %>
+  </article>
+</div>
+
+<% if (config.gitalk ) { %>
+    <%- partial('_widget/gitalk') %>
+<% }else{ %>
+    <%- partial('_widget/disqus') %>
+<% } %>
