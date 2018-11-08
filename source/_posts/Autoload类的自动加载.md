@@ -6,6 +6,7 @@ tags:
   - Composer
 categories:
   - PHP
+translate_title: autoload-class-for-php
 date: 2018-11-07 14:00:00
 ---
 

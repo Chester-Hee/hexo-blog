@@ -81,7 +81,7 @@ pagination_dir: page
 theme: replica-next
 
 translate_title:
-  translate_way: google    #google | baidu | youdao
+  translate_way: baidu
   youdao_api_key: XXX
   youdao_keyfrom: XXX
   is_need_proxy: false     #true | false
