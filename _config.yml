@@ -10,7 +10,8 @@ keywords: helingfeng,larvel,php,linux,chester
 author: Chester-He
 language: zh-Hans
 timezone: Asia/Shanghai
-favicon: https://assets-cdn.github.com/favicon.ico
+#favicon: https://assets-cdn.github.com/favicon.ico
+favicon: https://static.laravelacademy.org/image/favicon.png
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
