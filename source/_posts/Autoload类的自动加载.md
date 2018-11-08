@@ -6,7 +6,7 @@ tags:
   - Composer
 categories:
   - PHP
-date: 2018-11-05 14:00:00
+date: 2018-11-07 14:00:00
 ---
 
 ## 类的自动加载
