@@ -65,8 +65,8 @@ try {
 
 例如：
 
-配置扫描路径
-```php
+配置扫描路径`src`
+```json
 {
   "autoload": {
     "classmap": ["src/"]
@@ -74,7 +74,7 @@ try {
 }
 ```
 
-生成结果文件
+其生成结果如下
 ```php
 <?php
 return array(
@@ -85,6 +85,25 @@ return array(
 
 #### psr-4
 
-#### files
+在`composer.json`里是这样进行配置的：
 
-###
+```json
+{
+  "autoload": {
+    "psr-4": {
+      "Foo\\": "src/"
+    }
+  }
+}
+```
+执行`composer install`更新自动加载。照`PSR-4`的规则，当在`index.php`中试图`new Foo\Bar\Baz`这个`class`时，`composer`会自动去寻找 `src/Bar/Baz.php"` 这个文件，如果它存在则进行加载。
+
+#### files
+```json
+{
+  "autoload": {
+    "files": ["src/MyLibrary/functions.php"]
+  }
+}
+```
+执行`composer install`更新自动加载。`Files`方式，就是手动指定供直接加载的文件。比如说我们有一系列全局的`helper functions`，可以放到一个`helper`文件里然后直接进行加载，也就是说，当你用`require 'vendor/autoload.php'`加载自动加载类时自动将`files`里的文件加载进来了，你直接使用就行了。
