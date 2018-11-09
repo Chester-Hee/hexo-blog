@@ -10,7 +10,7 @@ date: 2018-05-04 13:44:00
 ---
 ## PHP-JavaScript-Transformer
 
-https://github.com/helingfeng/PHP-JavaScript-Transformer
+https://github.com/Chester-Hee/php2js-vars.git
 
 将PHP变量转换成JavaScript变量扩展包，避免直接echo带来的JavaScript语法问题。
 
@@ -22,7 +22,7 @@ https://github.com/helingfeng/PHP-JavaScript-Transformer
  "repositories": [
     {
       "type": "git",
-      "url": "https://github.com/helingfeng/PHP-JavaScript-Transformer.git"
+      "url": "https://github.com/Chester-Hee/php2js-vars.git"
     }
   ]
 ```
