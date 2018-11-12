@@ -12,6 +12,7 @@ menu:
  archives: true
  tags: true
  categories: true
+ about: true
 
 rss_dir: atom.xml
 
