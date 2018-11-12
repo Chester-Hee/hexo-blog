@@ -13,5 +13,8 @@ var isOverview = ['tags', 'archives', 'categories'].indexOf(nav_selected) === -1
                 class="counter"><%= site.categories.length %></span></a></li>
     <li class="<%= nav_selected === 'tags' ? 'selected' : '' %>">
       <a href="<%= url_for(theme.tag_dir) %>">Tags <span class="counter"><%= site.tags.length %></span></a></li>
+
+      <li class="<%= nav_selected === 'about' ? 'selected' : '' %>">
+            <a href="">About <span class="counter">me</span></a></li>
   </ul>
 </nav>
