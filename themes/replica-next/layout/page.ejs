@@ -12,6 +12,13 @@
       <% if(page.title === 'categories'){ %>
       <%- list_categories() %>
       <% } %>
+
+      <% if(page.title !== 'categories' && page.title !== 'tags'){ %>
+        <article class="post-content">
+          <h1><%= page.title || 'Untitle' %></h1>
+          <%- page.content %>
+        </article>
+      <% } %>
     </div>
   </div>
 </div>
