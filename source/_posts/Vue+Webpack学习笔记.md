@@ -1,5 +1,5 @@
 ---
-title: Vue+Webpack学习笔记
+title: Vue + Webpack 学习笔记
 author: Chester-He
 tags:
   - Vue
