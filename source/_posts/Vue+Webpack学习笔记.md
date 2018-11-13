@@ -6,6 +6,7 @@ tags:
   - Webpack
 categories:
   - Vue
+translate_title: vue-webpack-learn-note
 date: 2018-11-13 10:01:00
 ---
 
