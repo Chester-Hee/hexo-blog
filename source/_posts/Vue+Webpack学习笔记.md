@@ -26,7 +26,7 @@ date: 2018-11-13 10:01:00
 
 非常有意思的开发方式，前端现在最火的打包和构建工具，它的强大而我还只能远望，使用 Webpack 构建，Vue 官方文档也提供了支持：
 
-```js
+```javascript
 module.exports = {
   // ...
   resolve: {
@@ -43,7 +43,7 @@ module.exports = {
 
 最简单的一份配置文件，单一入口 main.js 文件，默认来自 src 目录 ；构建压缩输出 bundle.js 文件，默认输出到 dist 目录
 
-```ecmascript 6
+```javascript
 const path = require('path');
 
 const config = {
