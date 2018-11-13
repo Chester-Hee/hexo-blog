@@ -43,7 +43,7 @@ module.exports = {
 
 最简单的一份配置文件，单一入口 main.js 文件，默认来自 src 目录 ；构建压缩输出 bundle.js 文件，默认输出到 dist 目录
 
-```js
+```ecmascript 6
 const path = require('path');
 
 const config = {
@@ -60,14 +60,12 @@ const config = {
     }
 };
 module.exports = config;
-
-``` 
+```
 
 配置中 mode 来自 Webpack4 的特性！
-
 源文件 main.js 引入 vue 并构建 vue 对象，定义数据 message 字符串，还定义 method reverseMessage 将字符串进行翻转操作
 
-```js
+```ecmascript 6
 import Vue from 'vue';
 
 var app = new Vue({
