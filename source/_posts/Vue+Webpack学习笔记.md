@@ -65,7 +65,7 @@ module.exports = config;
 配置中 mode 来自 Webpack4 的特性！
 源文件 main.js 引入 vue 并构建 vue 对象，定义数据 message 字符串，还定义 method reverseMessage 将字符串进行翻转操作
 
-```ecmascript 6
+```javascript
 import Vue from 'vue';
 
 var app = new Vue({
