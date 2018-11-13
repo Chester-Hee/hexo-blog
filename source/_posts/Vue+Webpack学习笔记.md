@@ -144,4 +144,4 @@ webpack
 
 done 运行结果：
 
-![](/image/demo.png)
+![vue-demo](/images/demo.png)
