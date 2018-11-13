@@ -59,8 +59,8 @@ const config = {
         }
     }
 };
-
 module.exports = config;
+
 ``` 
 
 配置中 mode 来自 Webpack4 的特性！
