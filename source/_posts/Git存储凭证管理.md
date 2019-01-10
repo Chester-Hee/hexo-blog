@@ -59,13 +59,13 @@ date: 2018-11-05 14:00:00
 
 **解决办法?**
 
-### 1.清除Git存储凭证
+composer install 出现无法拉取私有扩展包时
 
+### 1.清除Git存储凭证
 ```shell
 # 全部 unset 一遍呗
 $ git config --local --unset credential.helper
 $ git config --global --unset credential.helper
-# 这个要 sudo
 $ sudo git config --system --unset credential.helper
 
 # 这三个命令都没有显示任何东西了
@@ -74,14 +74,13 @@ $ git config --global credential.helper
 $ git config --system credential.helper
 ```
 
-如果还不生效 ？
+hmm 如果还不生效 ？
 
 ```shell
-# 还真的依然有 osxkeychain
+# 查看是否仍存在 osxkeychain
 $ git config -l
 credential.helper=osxkeychain
-
-# 跟回答一毛一样
+# 获取真正的路径，找到对应文件手工删掉即可
 $ git config --show-origin --get credential.helper
 file:/Applications/Xcode.app/Contents/Developer/usr/share/git-core/gitconfig    osxkeychain
 
