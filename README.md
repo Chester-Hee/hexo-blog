@@ -1,20 +1,21 @@
-# Hexo 博客文档
+# Hexo 搭建个人技术博客
 
-博客访问地址：https://www.helingfeng.com/
-
+在线博客访问：https://www.helingfeng.com/
 
 ---
 ### 安装工具
 
 - nodejs [sudo apt-get install nodejs / brew install nodejs]
-- hexo [https://hexo.io/]
-- npm install hexo-server
+- cnpm  [npm install cnpm -g]
 
 ### 启动服务
 
 ```
-$ git clone https://github.com/helingfeng/Hexo-Blog.git
+$ git clone https://github.com/Chester-Hee/hexo-blog.git
 $ cd Hexo-Blog
+$ cnpm install
+# $ hexo g
+# 使用动态服务器模式
 $ hexo server
 
 INFO  Start processing
