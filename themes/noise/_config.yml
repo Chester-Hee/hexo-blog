@@ -1,9 +1,9 @@
 # Header
 menu:
   ## If your site is put in a subdirectory, set Home as '/child/'
-  Home: /
-  Archives: archives
-  About: about
+  首页: /
+  归档: archives
+  关于我: about
 
 social:
   email: dreamhelingfeng@gmail.com
