@@ -3,12 +3,13 @@ menu:
   ## If your site is put in a subdirectory, set Home as '/child/'
   Home: /
   Archives: archives
+  About: about
 
 social:
-  email:
+  email: dreamhelingfeng@gmail.com
   twitter:
   weibo:
-  github:
+  github: https://github.com/helingfeng
   googleplus:
   rss: /atom.xml
 
