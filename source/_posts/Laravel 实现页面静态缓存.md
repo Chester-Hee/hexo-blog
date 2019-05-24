@@ -20,7 +20,7 @@ date: 2019-05-24 17:30:00
 
 附上代码地址：https://github.com/freedoomcode/laravel-page-cache
 
-我编码功底有限，建议不嫌多
+我编码功底有限，希望你可以舍得给予建议
 
 ### 实现思路
 
