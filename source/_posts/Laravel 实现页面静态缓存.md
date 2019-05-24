@@ -8,6 +8,7 @@ tags:
   - Cache
 categories:
   - PHP
+translate_title: laravel-implementing-static-page-caching
 date: 2019-05-24 17:30:00
 ---
 
