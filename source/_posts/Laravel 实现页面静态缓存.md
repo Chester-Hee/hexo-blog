@@ -36,7 +36,7 @@ public function handle($request, Closure $next, $guard = null)
 }
 ```
 
-- 请求直接，我们对请求`path`+`query`进行编码作为文件名
+- 请求之前，我们对请求参数`path`+`query`进行编码作为文件名
 
 ```php
 $fileName = md5($uri);
