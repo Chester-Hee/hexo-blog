@@ -227,11 +227,11 @@ Laravel-Swagger 会自动根据您的注释进行匹配
 
 访问 `api/documentation` 效果如图
 
-![](../images/swagger-demo1.png)
+![demo1](/images/swagger-demo1.png)
 
 `try it out` 上传文件操作结果
 
-![](../images/swagger-demo2.png)
+![demo2](/images/swagger-demo2.png)
 
 ### 需要权限认证的接口
 
@@ -264,6 +264,6 @@ Laravel-Swagger 会自动根据您的注释进行匹配
   * },
   */
 ```
-![](../images/swagger-demo3.png)
+![demo3](/images/swagger-demo3.png)
 
 更多 Swagger3 定义字段描述，可以查看官方文档：https://swagger.io/specification/#parameterObject
