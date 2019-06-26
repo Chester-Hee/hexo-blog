@@ -134,3 +134,68 @@ function dataURLtoFile(dataurl, filename) {
   return new File([u8arr], filename, {type:mime});
 }
 ```
+
+### 图片拍摄角度问题
+
+首先来了解一个概念 `EXIF` 是什么?
+
+简单来说，`Exif`信息就是由数码相机在拍摄过程中采集一系列的信息，然后把信息放置在我们熟知的`JPEG/TIFF`文件的头部，也就是说`Exif`信息是镶嵌在 `JPEG/TIFF`图像文件格式内的一组拍摄参数。主要包含了以下几类信息：
+
+- 拍摄日期
+- 摄器材（机身、镜头、闪光灯等
+- 拍摄参数（快门速度、光圈F值、ISO速度、焦距、测光模式等
+- 图像处理参数（锐化、对比度、饱和度、白平衡等）
+- 图像描述及版权信息
+- GPS定位数据
+- 缩略图
+
+其中`orientation`记录着拍摄后图片旋转的角度信息
+
+| orientation | 旋转角度 |
+|:----:|:----:|
+| 1	| 0° |
+| 3	| 180°|
+| 6	| 顺时针90°|
+| 8	| 逆时针90°|
+
+所以，上传图片时，需要将图片进行反向旋转，才能得到一致的展示效果。
+
+开始旋转图片之前，我们需要获取图片旋转信息，需要引入扩展：https://github.com/exif-js/exif-js
+
+然后，就可以编写代码实现：（所有的旋转都是以原点为中心的）
+```javascript
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+const anw = document.createAttribute('width');
+const anh = document.createAttribute('height');
+anw.nodeValue = w;
+anh.nodeValue = h;
+switch (orientation) {
+  case 6: // 90度，所以进行-90度旋转
+    anw.nodeValue = h;
+    anh.nodeValue = w;
+    canvas.setAttributeNode(anh);
+    canvas.setAttributeNode(anw);
+    ctx.rotate(Math.PI / 2);
+    ctx.drawImage(this, 0, -h, w, h);
+    break;
+  case 3: // 180度，所以进行-180度旋转
+    canvas.setAttributeNode(anh);
+    canvas.setAttributeNode(anw);
+    ctx.rotate(Math.PI);
+    ctx.drawImage(this, -w, -h, w, h);
+    break;
+  case 8: // -90度，所以进行90度旋转
+    anw.nodeValue = h;
+    anh.nodeValue = w;
+    canvas.setAttributeNode(anh);
+    canvas.setAttributeNode(anw);
+    ctx.rotate(3 * Math.PI / 2);
+    ctx.drawImage(this, -w, 0, w, h);
+    break;
+  default: // 0度，不进行旋转
+    canvas.setAttributeNode(anh);
+    canvas.setAttributeNode(anw);
+    ctx.drawImage(this, 0, 0, w, h);
+}
+```
