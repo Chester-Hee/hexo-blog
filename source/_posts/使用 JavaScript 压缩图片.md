@@ -29,7 +29,7 @@ date: 2019-06-26 20:00:00
 
 ![demo11](/images/demo11.jpg)
 
-使用 JavaScript 压缩图片，要了解三个 Web API: `FileReader`，`Canvas`，`Blob`
+使用 `JavaScript` 压缩图片，首先要学习三个`Web API`: `FileReader`，`Canvas`，`Blob`
 
 ### FileReader
 
