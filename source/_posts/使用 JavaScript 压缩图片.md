@@ -171,7 +171,7 @@ const anh = document.createAttribute('height');
 anw.nodeValue = w;
 anh.nodeValue = h;
 switch (orientation) {
-  case 6: // 90度，所以进行-90度旋转
+  case 6: // 90度
     anw.nodeValue = h;
     anh.nodeValue = w;
     canvas.setAttributeNode(anh);
@@ -179,13 +179,13 @@ switch (orientation) {
     ctx.rotate(Math.PI / 2);
     ctx.drawImage(this, 0, -h, w, h);
     break;
-  case 3: // 180度，所以进行-180度旋转
+  case 3: // 180度
     canvas.setAttributeNode(anh);
     canvas.setAttributeNode(anw);
     ctx.rotate(Math.PI);
     ctx.drawImage(this, -w, -h, w, h);
     break;
-  case 8: // -90度，所以进行90度旋转
+  case 8: // -90度
     anw.nodeValue = h;
     anh.nodeValue = w;
     canvas.setAttributeNode(anh);
@@ -193,7 +193,7 @@ switch (orientation) {
     ctx.rotate(3 * Math.PI / 2);
     ctx.drawImage(this, -w, 0, w, h);
     break;
-  default: // 0度，不进行旋转
+  default: // 0度
     canvas.setAttributeNode(anh);
     canvas.setAttributeNode(anw);
     ctx.drawImage(this, 0, 0, w, h);
