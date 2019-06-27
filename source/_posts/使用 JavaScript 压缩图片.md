@@ -1,5 +1,5 @@
 ---
-title: 前端使用 JavaScript 压缩图片
+title: 前端JS压缩图片，并解决旋转问题
 author: Chester-He
 tags:
   - JavaScript
@@ -149,7 +149,7 @@ function dataURLtoFile(dataurl, filename) {
 - GPS定位数据
 - 缩略图
 
-其中`orientation`记录着拍摄后图片旋转的角度信息
+其中`orientation`记录着拍摄后图片旋转的角度信息：https://www.impulseadventure.com/photo/exif-orientation.html
 
 | orientation | 旋转角度 |
 |:----:|:----:|
