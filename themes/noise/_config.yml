@@ -22,6 +22,7 @@ show_toc_by_default: true # to show toc if `toc:` is not specified in post
 duoshuo: #duoshuo_shortname
 disqus: #disqus _shortname
 google_analytics: #Google Analytics Tracking Code
+baidu_analytics: 66bdd0a984d281716c78a567d1f39e67 #baidu Analytics Tracking Code
 google_adsense_page_level_ads: #Google Adsense Page Level Ads Code
 
 less:
