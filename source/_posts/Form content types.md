@@ -1,12 +1,12 @@
 ---
-title: POST 请求 application/x-www-form-urlencoded 与 multipart/form-data
+title: POST 请求 application/x-www-form-urlencoded 与 multipart/form-data 区别
 author: helingfeng
 tags:
   - POST
 categories:
   - HTTP
 translate_title: form-content-types
-date: 2019-07-10 15:55:00
+date: 2019-08-10 15:55:00
 ---
 
 如何正确选择 `Form` 的 `Content-type` 类型？
