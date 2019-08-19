@@ -9,7 +9,6 @@ translate_title: ssh-remote-automatic-login-script
 date: 2019-07-10 15:55:00
 ---
 
-
 我们使用过 `SSH` 远程登录一台服务器，登录需要输入用户名和密码，并且服务器密码一般很难靠脑记住；`Windows` 用户可以使用 `XShell` 这种强大的工具，但是 Linux 或者 Mac 用户更倾向于命令行自动化脚本。
 
 开源的 `autossh` 工具，就为解决这个问题，使用 expect 工具完成交互，自动根据配置用户名密码登录指定服务器。
