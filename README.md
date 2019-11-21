@@ -1,42 +1,33 @@
-# API压测标准
+# Hexo 搭建个人技术博客
 
-## 东风日产
+在线博客访问：https://www.helingfeng.com/
 
-> 服务器情况：20台8核16G
-> 压测时间：6分钟
+---
+### 安装工具
 
-|选项|值|
-|---|---|
-|并发|2600|
-|TPS|接近900|
+- nodejs [sudo apt-get install nodejs / brew install nodejs]
+- cnpm  [npm install cnpm -g]
 
-换算为单台机器的性能
+### 启动服务
 
-|选项|值|
-|---|---|
-|并发|130|
-|TPS|45|
+```
+$ git clone https://github.com/Chester-Hee/hexo-blog.git
+$ cd Hexo-Blog
+$ cnpm install
+# $ hexo g
+# 使用动态服务器模式
+$ hexo server
 
-因为集群是会有性能损耗的，所以需要把损耗算上，按15%来计算
+INFO  Start processing
+INFO  Hexo is running at http://localhost:4000/. Press Ctrl+C to stop.
+```
 
-> 总并发量 = 单机并发量 x 机器数量 x (1-15%)
-> 总TPS = 单机TPS x 机器数量 x (1-15%)
+### 访问服务
 
-最终单机性能如下：
+http://localhost:4000/
 
-|选项|值|
-|---|---|
-|并发|150|
-|TPS|50|
+![](demo.png)
 
-## 东风启辰
 
-**以日产为标准，按照双方机器等比换算，建议如下**
 
-> 服务器情况：3台8核16G
-> 压测时间：6分钟
 
-|选项|值|
-|---|---|
-|并发|400|
-|TPS|130|
