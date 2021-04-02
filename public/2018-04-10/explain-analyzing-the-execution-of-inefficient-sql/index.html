@@ -1,0 +1,30 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="code farmer."><title>explain 分析低效 SQL 的执行 | 追赶日落日出</title><link rel="stylesheet" type="text/css" href="/css/normalize.css"><link rel="stylesheet" type="text/css" href="/css/highlight.css"><link rel="stylesheet" type="text/css" href="/css/font.css"><link rel="stylesheet" type="text/css" href="/css/noise.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?66bdd0a984d281716c78a567d1f39e67";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><article class="wrapper"><div class="post-main"><div class="nav"><nav class="container"><a class="sidebar-nav-item active" href="/">首页</a><a class="sidebar-nav-item" href="/archives">归档</a><a class="sidebar-nav-item" href="/about">关于我</a></nav><div class="container post-meta"><div class="post-tags"><a class="post-tag-link" href="/tags/Mysql/">Mysql</a></div><div class="post-time">2018-04-10</div></div></div><div class="container post-header"><h1>explain 分析低效 SQL 的执行</h1></div><div class="container post-toc"><details class="toc"><summary class="toc-accordion">Table of Contents</summary></details></div><div class="container post-content"><p>本文为读书笔记</p>
+<p>通过慢 SQL 日志查询到效率低的 SQL 后，我们可以通过 explain 或者 desc 获取 MySQL 如何执行 SELECT 语句的信息，包括 SELECT 语句执行过程表如何连接和连接的次序。</p>
+<p>explain 可以知道什么时候必须为表加入索引以得到一个使用索引来寻找记录 的更快的SELECT。</p>
+<ul>
+<li>select_type： select 类型</li>
+<li>table： 输出结果集的表</li>
+<li>type： 表示表的连接类型</li>
+<li>当表中仅有一行是type的值为system是最佳的连接类型；</li>
+<li>当select操作中使用索引进行表连接时type的值为ref；</li>
+<li>当select的表连接没有使用索引时，经常会看到type的值为ALL，表示对该表</li>
+<li>进行了全表扫描，这时需要考虑通过创建索引来提高表连接的效率。</li>
+<li>possible_keys： 表示查询时,可以使用的索引列.</li>
+<li>key： 表示使用的索引</li>
+<li>key_len： 索引长度</li>
+<li>rows： 扫描范围</li>
+<li>Extra： 执行情况的说明和描述</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">EXPLAIN</span> <span class="keyword">SELECT</span> admin_users.username,admin_roles.name </span><br><span class="line">	<span class="keyword">FROM</span> admin_users</span><br><span class="line">  	<span class="keyword">LEFT</span> <span class="keyword">JOIN</span> admin_role_users </span><br><span class="line">    	<span class="keyword">ON</span> admin_users.id = admin_role_users.user_id</span><br><span class="line">  	<span class="keyword">INNER</span> <span class="keyword">JOIN</span> admin_roles </span><br><span class="line">    	<span class="keyword">ON</span> admin_roles.id = admin_role_users.role_id</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pasted-35.png" alt="upload successful"></p>
+</div></div><div class="post-main post-comment"></div></article><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.css"><script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script><script src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script><script>$(document).ready(function() {
+  $(".fancybox").fancybox();
+});
+</script></body></html>

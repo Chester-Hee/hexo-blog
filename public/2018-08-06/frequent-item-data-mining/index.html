@@ -1,0 +1,458 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="code farmer."><title>频繁项数据挖掘 | 追赶日落日出</title><link rel="stylesheet" type="text/css" href="/css/normalize.css"><link rel="stylesheet" type="text/css" href="/css/highlight.css"><link rel="stylesheet" type="text/css" href="/css/font.css"><link rel="stylesheet" type="text/css" href="/css/noise.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?66bdd0a984d281716c78a567d1f39e67";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><article class="wrapper"><div class="post-main"><div class="nav"><nav class="container"><a class="sidebar-nav-item active" href="/">首页</a><a class="sidebar-nav-item" href="/archives">归档</a><a class="sidebar-nav-item" href="/about">关于我</a></nav><div class="container post-meta"><div class="post-tags"><a class="post-tag-link" href="/tags/算法/">算法</a></div><div class="post-time">2018-08-06</div></div></div><div class="container post-header"><h1>频繁项数据挖掘</h1></div><div class="container post-toc"><details class="toc"><summary class="toc-accordion">Table of Contents</summary><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#时代的变迁"><span class="toc-number">1.</span> <span class="toc-text">时代的变迁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据挖掘-FPGrowth"><span class="toc-number">2.</span> <span class="toc-text">数据挖掘 FPGrowth</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#涉及算法"><span class="toc-number">2.1.</span> <span class="toc-text">涉及算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Apriori算法"><span class="toc-number">2.2.</span> <span class="toc-text">Apriori算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FPTree算法"><span class="toc-number">2.3.</span> <span class="toc-text">FPTree算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#挖掘频繁项"><span class="toc-number">2.4.</span> <span class="toc-text">挖掘频繁项</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献，感谢作者"><span class="toc-number"></span> <span class="toc-text">参考文献，感谢作者</span></a></li></details></div><div class="container post-content"><h3 id="时代的变迁"><a href="#时代的变迁" class="headerlink" title="时代的变迁"></a>时代的变迁</h3><ul>
+<li>曾经我听一个外国人说过这样一句话，翻译过来是这样的意思：<code>程序员</code>就好比<code>建筑工人</code>，如果你不懂数据挖掘与机器学习，那你是一个<code>泥瓦工</code>，反之，你是一位掌握<code>蓝图</code>的工程师。</li>
+</ul>
+<h3 id="数据挖掘-FPGrowth"><a href="#数据挖掘-FPGrowth" class="headerlink" title="数据挖掘 FPGrowth"></a>数据挖掘 FPGrowth</h3><h4 id="涉及算法"><a href="#涉及算法" class="headerlink" title="涉及算法"></a><strong>涉及算法</strong></h4><ul>
+<li><code>Apriori</code> 算法</li>
+<li><code>FPTree</code> 算法</li>
+<li>至于其他算法我也没有研究～</li>
+</ul>
+<h4 id="Apriori算法"><a href="#Apriori算法" class="headerlink" title="Apriori算法"></a><strong>Apriori算法</strong></h4><p>Rakesh Agrawal 和 RamakrishnanSkrikant 提出的一种具有影响力的挖局布尔关联规则的频繁项集的算法。</p>
+<ul>
+<li><strong>算法原理讲解</strong></li>
+</ul>
+<p>假设我们有一家商店，商店有四款产品<code>A</code>,<code>B</code>,<code>C</code>,<code>D</code>;<br>那么所有商品的无序组合方式有<code>15</code>种(2^4-1);</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A B C D </span><br><span class="line">AB AC AD BC BD CD </span><br><span class="line">ABC ABD ACD BCD</span><br><span class="line">ABCD</span><br></pre></td></tr></table></figure>
+<p>最<code>暴力</code>的频繁项挖掘算法，可以遍历所有的组合方式，但是组合方式随商品数量增长成<code>指数</code>，所以当商品数量较多时，算法的效率是非常低的。</p>
+<p> 科学家发现一种所谓的Apriori原理，可以帮助我们减少计算量。<br> <code>Apriori原理</code>是说如果某个项集是频繁的，那么它的所有子集也是频繁的。更常用的是它的逆否命题，即如果一个项集是非频繁的，那么它的所有超集也是非频繁的。</p>
+<ul>
+<li><p><strong>基本概念</strong></p>
+<ul>
+<li><code>支持度</code> support=P(AB) 简单来说是指事件A和事件B同时发生的概率</li>
+<li><code>置信度</code> confidence=P(AB)/P(A) 表示所有商品交易中有10%顾客同时买了A商品，并且买B的顾客有50%</li>
+<li><code>K项集</code> K(n)项集满足支持度阈值的必要条件K(n-1)子项集也是频繁项集。</li>
+</ul>
+</li>
+<li><p><strong>算法思路</strong></p>
+</li>
+</ul>
+<p>它使用一种称为逐层搜索的迭代方法，K(n)项集合用于探索K(n+1)集合。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 首先，确定频繁规则`支持度` support=50%</span><br><span class="line">2. 找出频繁项候选`K1`集，排除支持度阈值不满足的组合，得到频繁项集`L1`</span><br><span class="line">3. 根据`L1`产生候选频繁项集`K2`</span><br><span class="line">4. 重复步骤2和步骤3，直到`Ln`项集合无法再产生候选频繁项</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>举个栗子</strong><ul>
+<li>假设支持度min_support=30%</li>
+<li>假设现在有5个顾客的订单记录</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>顾客名称</th>
+<th>订单商品列表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>张三</td>
+<td>A B C</td>
+</tr>
+<tr>
+<td>李四</td>
+<td>B C D</td>
+</tr>
+<tr>
+<td>王五</td>
+<td>A C</td>
+</tr>
+<tr>
+<td>老六</td>
+<td>B C</td>
+</tr>
+<tr>
+<td>陈七</td>
+<td>E C D</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>a. <strong>跟据购买记录的订单列表生产候选频繁项K1。如下表格，</strong></p>
+<table>
+<thead>
+<tr>
+<th>候选频繁项</th>
+<th>支持度数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{A}</td>
+<td>2</td>
+</tr>
+<tr>
+<td>{B}</td>
+<td>3</td>
+</tr>
+<tr>
+<td>{C}</td>
+<td>5</td>
+</tr>
+<tr>
+<td>{D}</td>
+<td>2</td>
+</tr>
+<tr>
+<td>{E}</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>b. <strong>根据MinSupport=30%得出频繁项集L1</strong></p>
+<table>
+<thead>
+<tr>
+<th>频繁项</th>
+<th>支持度数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{A}</td>
+<td>2</td>
+</tr>
+<tr>
+<td>{B}</td>
+<td>3</td>
+</tr>
+<tr>
+<td>{C}</td>
+<td>5</td>
+</tr>
+<tr>
+<td>{D}</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>c. <strong>再以L1组合产生候选频繁集K2</strong></p>
+<table>
+<thead>
+<tr>
+<th>候选频繁项</th>
+<th>支持度数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{A B}</td>
+<td>1</td>
+</tr>
+<tr>
+<td>{A C}</td>
+<td>2</td>
+</tr>
+<tr>
+<td>{A D}</td>
+<td>0</td>
+</tr>
+<tr>
+<td>{B C}</td>
+<td>3</td>
+</tr>
+<tr>
+<td>{B D}</td>
+<td>1</td>
+</tr>
+<tr>
+<td>{C D}</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>e. <strong>根据MinSupport=30%得出频繁项集L2，并输出</strong></p>
+<table>
+<thead>
+<tr>
+<th>频繁项</th>
+<th>支持度数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{A C}</td>
+<td>2</td>
+</tr>
+<tr>
+<td>{B C}</td>
+<td>3</td>
+</tr>
+<tr>
+<td>{C D}</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>f. <strong>再以L2组合产生候选频繁集K3</strong></p>
+<table>
+<thead>
+<tr>
+<th>候选频繁项</th>
+<th>支持度数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{A B C}</td>
+<td>1</td>
+</tr>
+<tr>
+<td>{A B D}</td>
+<td>0</td>
+</tr>
+<tr>
+<td>{A C D}</td>
+<td>0</td>
+</tr>
+<tr>
+<td>{B C D}</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>e. <strong>根据MinSupport=30%得出频繁项集L3 = {} 空，算法结束</strong></p>
+<p>最后得到<code>频繁项集</code>为</p>
+<table>
+<thead>
+<tr>
+<th>频繁项</th>
+<th>支持度数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{A C}</td>
+<td>2 = 40%顾客同时购买A也购买C</td>
+</tr>
+<tr>
+<td>{B C}</td>
+<td>3 = 60%顾客同时购买B也购买C</td>
+</tr>
+<tr>
+<td>{C D}</td>
+<td>2 = 40%顾客同时购买C也购买D</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>到这里已经完成了我们的频繁项挖掘工作，Apriori算法其实还挺简单理解的。<br>一切东西都是从简单开始的，从简到繁，学习也是这样，不然一开始就被概念吓倒，以后还会有精力和兴趣吗？</p>
+<p>说好的附PHP源码呢？</p>
+<p>个人编码能力有限，在此献丑了</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Apriori 算法</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Created by PhpStorm.</span></span><br><span class="line"><span class="comment"> * User: helingfeng</span></span><br><span class="line"><span class="comment"> * Date: 2017-11-30</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1.假设现在有5个顾客的订单记录</span></span><br><span class="line"><span class="comment">// 2.假设支持度min_support=30%</span></span><br><span class="line">$usersNum = <span class="number">5</span>;</span><br><span class="line">$minSupportPercent = <span class="number">0.3</span>;</span><br><span class="line">$minSupport = ceil($minSupportPercent * <span class="number">5</span>);</span><br><span class="line">$ordersForGoods = [</span><br><span class="line">    [<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>],</span><br><span class="line">    [<span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>],</span><br><span class="line">    [<span class="string">'A'</span>, <span class="string">'C'</span>],</span><br><span class="line">    [<span class="string">'B'</span>, <span class="string">'C'</span>],</span><br><span class="line">    [<span class="string">'E'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>],</span><br><span class="line">];</span><br><span class="line">$GLOBALS[<span class="string">'combineSets'</span>] = [];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 排列组合</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">combine</span><span class="params">($source = [], $num = <span class="number">0</span>, $target = [])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ($num == count($target)) &#123;</span><br><span class="line">        array_push($GLOBALS[<span class="string">'combineSets'</span>], $target);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">foreach</span> ($source <span class="keyword">as</span> $key =&gt; $value) &#123;</span><br><span class="line">            $g = $target;</span><br><span class="line">            $b = $source;</span><br><span class="line">            array_push($g, $value);</span><br><span class="line">            $b = array_slice($b, $key + <span class="number">1</span>);</span><br><span class="line">            combine($b, $num, $g);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//支持度过滤</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filterBySupport</span><span class="params">($orders, $sets, $support)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $nSets = [];</span><br><span class="line">    <span class="keyword">foreach</span> ($sets <span class="keyword">as</span> $items) &#123;</span><br><span class="line">        $min = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">foreach</span> ($orders <span class="keyword">as</span> $order) &#123;</span><br><span class="line">            <span class="keyword">if</span> (validSubSets($order, $items)) &#123;</span><br><span class="line">                $min++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ($min &gt;= $support) &#123;</span><br><span class="line">            array_push($nSets, [$items, $min]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $nSets;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//频繁项判断</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validSubSets</span><span class="params">($sets, $subSets)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $valid = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">foreach</span> ($subSets <span class="keyword">as</span> $item) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">false</span> === array_search($item, $sets)) &#123;</span><br><span class="line">            $valid = <span class="keyword">false</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $valid;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取k1项集</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getGoodsArr</span><span class="params">($orders)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $goodsArr = [];</span><br><span class="line">    <span class="keyword">foreach</span> ($orders <span class="keyword">as</span> $order) &#123;</span><br><span class="line">        <span class="keyword">foreach</span> ($order <span class="keyword">as</span> $goods) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">false</span> === array_search($goods, $goodsArr)) &#123;</span><br><span class="line">                array_push($goodsArr, $goods);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $goodsArr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$dimension = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    $goods = getGoodsArr($ordersForGoods);</span><br><span class="line">    combine($goods, $dimension);</span><br><span class="line">    $sets = filterBySupport($ordersForGoods, $GLOBALS[<span class="string">'combineSets'</span>], $minSupport);</span><br><span class="line">	<span class="comment">//若集合为空，结束循环</span></span><br><span class="line">    <span class="keyword">if</span> (count($sets) &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> ($dimension != <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">echo</span> json_encode($sets, JSON_UNESCAPED_UNICODE);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	$GLOBALS[<span class="string">'combineSets'</span>] = [];</span><br><span class="line">    $dimension++;</span><br><span class="line">&#125; <span class="keyword">while</span> (<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//output 结果</span></span><br><span class="line">[[[<span class="string">"A"</span>,<span class="string">"C"</span>],<span class="number">2</span>],[[<span class="string">"B"</span>,<span class="string">"C"</span>],<span class="number">3</span>],[[<span class="string">"C"</span>,<span class="string">"D"</span>],<span class="number">2</span>]]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>代码下载地址： <a href="http://wiki.helingfeng.com/docs/show/4" target="_blank" rel="noopener">http://wiki.helingfeng.com/docs/show/4</a></p>
+</blockquote>
+<h4 id="FPTree算法"><a href="#FPTree算法" class="headerlink" title="FPTree算法"></a><strong>FPTree算法</strong></h4><ul>
+<li><p><strong>算法原理讲解</strong><br>Apriori算法虽然实现简单，但是从算法的效率来看，每次迭代都需要重复遍历，对<code>I\O</code>的资源消耗是巨大的。而基于Apriori改进的FPTree算法，使用<code>树结构</code>进行巧妙临时存储，<code>无论多少数据，只需要扫描两次数据集</code>。</p>
+</li>
+<li><p><strong>基本概念</strong></p>
+<ul>
+<li><code>表头项</code> 记录了所有的事件频繁集出现的次数，并删除支持度低于阈值的项按照次数降序排列。</li>
+<li><code>FPTree</code> 频繁聚项会在树结构体现出重叠。</li>
+</ul>
+</li>
+<li><p><strong>构建FPTree</strong><br>这个是算法就重点的部分。<br>还是举一个例子来分析如何构建吧！</p>
+</li>
+</ul>
+<p>假设支持度support=30%<br>顾客还是那五个演员，哈哈</p>
+<table>
+<thead>
+<tr>
+<th>顾客名称</th>
+<th>订单商品列表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>张三</td>
+<td>A B C</td>
+</tr>
+<tr>
+<td>李四</td>
+<td>B C D</td>
+</tr>
+<tr>
+<td>王五</td>
+<td>A C</td>
+</tr>
+<tr>
+<td>老六</td>
+<td>B C</td>
+</tr>
+<tr>
+<td>陈七</td>
+<td>E C D</td>
+</tr>
+</tbody>
+</table>
+<p>a.第一次扫描所有数据，得到下面表格；商品=&gt;购买次数</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>支持度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>2</td>
+</tr>
+<tr>
+<td>B</td>
+<td>3</td>
+</tr>
+<tr>
+<td>C</td>
+<td>5</td>
+</tr>
+<tr>
+<td>D</td>
+<td>2</td>
+</tr>
+<tr>
+<td>E</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>b.按支持度降序排序，并过滤MinSupport，得到表头项</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>支持度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C</td>
+<td>5</td>
+</tr>
+<tr>
+<td>B</td>
+<td>3</td>
+</tr>
+<tr>
+<td>A</td>
+<td>2</td>
+</tr>
+<tr>
+<td>D</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>c.根据表头项重新排序订单数据，并过滤，得到新的订单商品列表，如下</p>
+<table>
+<thead>
+<tr>
+<th>顾客名称</th>
+<th>订单商品列表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>张三</td>
+<td>C B A</td>
+</tr>
+<tr>
+<td>李四</td>
+<td>C B D</td>
+</tr>
+<tr>
+<td>王五</td>
+<td>C A</td>
+</tr>
+<tr>
+<td>老六</td>
+<td>C B</td>
+</tr>
+<tr>
+<td>陈七</td>
+<td>C D</td>
+</tr>
+</tbody>
+</table>
+<p>d.第二次扫描所有数据</p>
+<p>从张三开始，生成树链图t1</p>
+<p><strong>| 张三  | C B A |</strong></p>
+<p><img src="/images/pasted-16.png" alt="upload successful"></p>
+<hr>
+<p><strong>| 李四  | C B D |</strong></p>
+<p><img src="/images/pasted-17.png" alt="upload successful"></p>
+<hr>
+<p><strong>| 王五  | C A |</strong></p>
+<p><img src="/images/pasted-18.png" alt="upload successful"></p>
+<hr>
+<p><strong>| 老六  | C B |</strong></p>
+<p><img src="/images/pasted-19.png" alt="upload successful"></p>
+<hr>
+<p><strong>| 陈七  | C D |</strong></p>
+<p><img src="/images/pasted-20.png" alt="upload successful"></p>
+<hr>
+<p>perfect !</p>
+<p>扫描完数据，FP Tree已经构建完毕。</p>
+<h4 id="挖掘频繁项"><a href="#挖掘频繁项" class="headerlink" title="挖掘频繁项"></a>挖掘频繁项</h4><p>费力九牛之力，终于把Tree构造完成。接下去我们怎么去挖掘频繁项呢？<br>…..思考十五分</p>
+<p>引用文献的一段话，我觉得解释的挺好，<code>大概原理</code>，我们首先要从项头表的底部项依次向上挖掘。对于项头表对应于FP树的每一项，我们要找到它的条件模式基。所谓条件模式基是以我们<strong>要挖掘的节点作为叶子节点</strong>所对应的FP子树。得到这个FP子树，我们将<strong>子树中每个节点的的计数设置为叶子节点的计数</strong>，并<strong>删除计数低于支持度的节点</strong>。从这个条件模式基，我们就可以递归挖掘得到频繁项集了。</p>
+<p>再看看表头项顺序</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>支持度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C</td>
+<td>5</td>
+</tr>
+<tr>
+<td>B</td>
+<td>3</td>
+</tr>
+<tr>
+<td>A</td>
+<td>2</td>
+</tr>
+<tr>
+<td>D</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p><strong>依次从 D=&gt;A=&gt;B=&gt;C 拆解频繁树，通过minSupport过滤得到频繁项</strong></p>
+<ol>
+<li>首先，拆解D得到两个候选频繁项{C:2,D:2},{C:1,B:1,D:1}；跟据候选项迭代生成FP-tree，最后得到频繁项{C:2,D:2}</li>
+<li>其次，拆解A得到两个候选频繁项{C:2,A:2},{C:1,B:1,A:1}；跟据候选项迭代生成FP-tree，最后得到频繁项{C:2,A:2}</li>
+<li>再次，拆解B得到两个候选频繁项{C:3,B:3}；；跟据候选项迭代生成FP-tree，最后得到频繁项{C:3,B:3}</li>
+<li>最后，C就不需要拆解了；</li>
+</ol>
+<p><strong>FPTree算法最后得到频繁项集</strong><br>{C:3,B:3},{C:2,D:2},{C:2,A:2}</p>
+<p>源代码正在编写中，后面学习章节补上….</p>
+<blockquote>
+<p>平凡之路也会有不平凡的机遇</p>
+</blockquote>
+<blockquote>
+<p>希望大家看完我的文章能有所收获，这就是我的最大荣幸！！！</p>
+</blockquote>
+<h2 id="参考文献，感谢作者"><a href="#参考文献，感谢作者" class="headerlink" title="参考文献，感谢作者"></a>参考文献，感谢作者</h2><ul>
+<li><a href="http://www.cnblogs.com/pinard/p/6293298.html" target="_blank" rel="noopener">http://www.cnblogs.com/pinard/p/6293298.html</a></li>
+<li><a href="https://www.cnblogs.com/zhengxingpeng/p/6679280.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhengxingpeng/p/6679280.html</a></li>
+<li>《数据挖掘算法导论》</li>
+</ul>
+</div></div><div class="post-main post-comment"></div></article><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.css"><script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script><script src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script><script>$(document).ready(function() {
+  $(".fancybox").fancybox();
+});
+</script></body></html>

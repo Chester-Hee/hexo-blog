@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    12306 余票查询 | 追赶日落日出
+  </title>
+  <meta name="description" content="code farmer.">
+  
+  <meta name="keywords" content="
+  12306
+  ">
+  
+  <meta name="author" content="Chester-He">
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+  <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+<script>
+  var _hmt = _hmt || [];
+  (function(){var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?66bdd0a984d281716c78a567d1f39e67";
+    var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm, s);})();
+</script>
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+</head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">This website</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/archives">Archives</a></li>
+        
+        
+        <li><a href="/categories">Categories</a></li>
+        
+        
+        <li><a href="/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="https://avatars1.githubusercontent.com/u/4921878?s=460&amp;v=4"> <i class="fa fa-caret-down"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/archives" class="header-toolbar-left"><i class="fa fa-file-text"></i> Posts </a>
+        <a href="/archives" class="header-toolbar-right"> 59 </a>
+      </li>
+      <li>
+        <a href="/tags" class="header-toolbar-left"><i class="fa fa-tags"></i> Tags </a>
+        <a href="/tags" class="header-toolbar-right"> 35 </a>
+      </li>
+      <li>
+        <a href="/categories" class="header-toolbar-left"><i class="fa fa-folder-open"></i> Categories </a>
+        <a href="/categories" class="header-toolbar-right"> 27 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/">追赶日落日出</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    Chester-He
+
+    <span class="post-date float-right" title="{{moment(1522653120000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1522653120000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>12306 余票查询</h1>
+    <h2 id="12306-余票查询"><a href="#12306-余票查询" class="headerlink" title="12306 余票查询"></a>12306 余票查询</h2><h4 id="接口地址"><a href="#接口地址" class="headerlink" title="接口地址"></a>接口地址</h4><p><strong>GET Method</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://kyfw.12306.cn/otn/leftTicket/queryZ</span><br></pre></td></tr></table></figure>
+<h4 id="接口参数"><a href="#接口参数" class="headerlink" title="接口参数"></a>接口参数</h4><p><strong>parameters</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">leftTicketDTO.train_date=2018-02-18&amp;leftTicketDTO.from_station=BJP&amp;leftTicketDTO.to_station=SHH&amp;purpose_codes=ADULT</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>请求参数</th>
+<th>参数类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>leftTicketDTO.train_date</td>
+<td>string</td>
+<td>Y-m-d 时间</td>
+</tr>
+<tr>
+<td>leftTicketDTO.from_station</td>
+<td>string</td>
+<td>起始车站编码</td>
+</tr>
+<tr>
+<td>leftTicketDTO.to_station</td>
+<td>string</td>
+<td>终点车站编码</td>
+</tr>
+<tr>
+<td>purpose_codes</td>
+<td>string</td>
+<td>附加条件（ADULT 成人票，0X00 学生票）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="所有车站编码对照"><a href="#所有车站编码对照" class="headerlink" title="所有车站编码对照"></a>所有车站编码对照</h4><p><a href="https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.9047" title="https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.9047" target="_blank" rel="noopener">https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.9047</a></p>
+<h4 id="接口返回"><a href="#接口返回" class="headerlink" title="接口返回"></a>接口返回</h4><p><a href="https://kyfw.12306.cn/otn/leftTicket/queryZ?leftTicketDTO.train_date=2018-02-19&amp;leftTicketDTO.from_station=BJP&amp;leftTicketDTO.to_station=SHH&amp;purpose_codes=ADULT" title="https://kyfw.12306.cn/otn/leftTicket/queryZ?leftTicketDTO.train_date=2018-02-19&amp;leftTicketDTO.from_station=BJP&amp;leftTicketDTO.to_station=SHH&amp;purpose_codes=ADULT" target="_blank" rel="noopener">https://kyfw.12306.cn/otn/leftTicket/queryZ?leftTicketDTO.train_date=2018-02-19&amp;leftTicketDTO.from_station=BJP&amp;leftTicketDTO.to_station=SHH&amp;purpose_codes=ADULT</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;data&quot;: &#123;</span><br><span class="line">        &quot;flag&quot;: &quot;1&quot;,</span><br><span class="line">        &quot;map&quot;: &#123;</span><br><span class="line">            &quot;AOH&quot;: &quot;上海虹桥&quot;,</span><br><span class="line">            &quot;BJP&quot;: &quot;北京&quot;,</span><br><span class="line">            &quot;SHH&quot;: &quot;上海&quot;,</span><br><span class="line">            &quot;VNP&quot;: &quot;北京南&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;result&quot;: [</span><br><span class="line">            &quot;|23:00-06:00系统维护时间|240000G1010D|G101|VNP|AOH|VNP|AOH|06:43|12:39|05:56|IS_TIME_NOT_BUY|m6x834Y1%2Fdp%2BurLu8dI6uYsKPCOZsDpYJLqIvIE9cY2orkrX|20180219|3|P2|01|11|1|0|||||||||||有|有|7||O0M090|OM9|0&quot;,</span><br><span class="line">            &quot;|23:00-06:00系统维护时间|240000G10325|G103|VNP|AOH|VNP|AOH|06:53|12:49|05:56|IS_TIME_NOT_BUY|w%2FLnQ0ETp%2Fja1rOHO7S7YfVUb%2BijsiQFasMAneG6A8k4h6Dc|20180219|3|P3|01|11|1|0|||||||||||有|有|17||O0M090|OM9|0&quot;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;httpstatus&quot;: 200,</span><br><span class="line">    &quot;messages&quot;: &quot;&quot;,</span><br><span class="line">    &quot;status&quot;: true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>返回字段</th>
+<th>描述内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>map</td>
+<td>包含查询结果中的所有车站编码信息</td>
+</tr>
+<tr>
+<td>result</td>
+<td>表示所有查询符合条件的列车信息，编号，起止车站，查询条件对于车站的出发时间与到达时间</td>
+</tr>
+<tr>
+<td>httpstatus</td>
+<td>查询状态200 正常</td>
+</tr>
+</tbody>
+</table>
+<h4 id="座位标识"><a href="#座位标识" class="headerlink" title="座位标识"></a>座位标识</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&apos;swz_num&apos; =&gt; &apos;商务座&apos;,</span><br><span class="line">&apos;tz_num&apos; =&gt; &apos;特等座&apos;,</span><br><span class="line">&apos;zy_num&apos; =&gt; &apos;一等座&apos;,</span><br><span class="line">&apos;ze_num&apos; =&gt; &apos;二等座&apos;,</span><br><span class="line">&apos;gr_num&apos; =&gt; &apos;高级软卧&apos;,</span><br><span class="line">&apos;rw_num&apos; =&gt; &apos;软卧&apos;,</span><br><span class="line">&apos;yw_num&apos; =&gt; &apos;硬卧&apos;,</span><br><span class="line">&apos;rz_num&apos; =&gt; &apos;软座&apos;,</span><br><span class="line">&apos;yz_num&apos; =&gt; &apos;硬座&apos;,</span><br><span class="line">&apos;wz_num&apos; =&gt; &apos;无座&apos;,</span><br><span class="line">&apos;qt_num&apos; =&gt; &apos;其它&apos;</span><br></pre></td></tr></table></figure>
+<h4 id="接口返回字符串参数映射"><a href="#接口返回字符串参数映射" class="headerlink" title="接口返回字符串参数映射"></a>接口返回字符串参数映射</h4><table>
+<thead>
+<tr>
+<th>字段描述</th>
+<th>索引值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>secretStr</td>
+<td>0</td>
+</tr>
+<tr>
+<td>buttonTextInfo</td>
+<td>1</td>
+</tr>
+<tr>
+<td>train_no</td>
+<td>2</td>
+</tr>
+<tr>
+<td>station_train_code</td>
+<td>3</td>
+</tr>
+<tr>
+<td>start_station_telecode</td>
+<td>4</td>
+</tr>
+<tr>
+<td>end_station_telecode</td>
+<td>5</td>
+</tr>
+<tr>
+<td>from_station_telecode</td>
+<td>6</td>
+</tr>
+<tr>
+<td>to_station_telecode</td>
+<td>7</td>
+</tr>
+<tr>
+<td>start_time</td>
+<td>8</td>
+</tr>
+<tr>
+<td>arrive_time</td>
+<td>9</td>
+</tr>
+<tr>
+<td>lishi</td>
+<td>10</td>
+</tr>
+<tr>
+<td>canWebBuy</td>
+<td>11</td>
+</tr>
+<tr>
+<td>yp_info</td>
+<td>12</td>
+</tr>
+<tr>
+<td>start_train_date</td>
+<td>13</td>
+</tr>
+<tr>
+<td>train_seat_feature</td>
+<td>14</td>
+</tr>
+<tr>
+<td>location_code</td>
+<td>15</td>
+</tr>
+<tr>
+<td>from_station_no</td>
+<td>16</td>
+</tr>
+<tr>
+<td>to_station_no</td>
+<td>17</td>
+</tr>
+<tr>
+<td>is_support_card</td>
+<td>18</td>
+</tr>
+<tr>
+<td>controlled_train_flag</td>
+<td>19</td>
+</tr>
+<tr>
+<td>gg_num</td>
+<td>20</td>
+</tr>
+<tr>
+<td>gr_num</td>
+<td>21</td>
+</tr>
+<tr>
+<td>qt_num</td>
+<td>22</td>
+</tr>
+<tr>
+<td>rw_num</td>
+<td>23</td>
+</tr>
+<tr>
+<td>rz_num</td>
+<td>24</td>
+</tr>
+<tr>
+<td>tz_num</td>
+<td>25</td>
+</tr>
+<tr>
+<td>wz_num</td>
+<td>26</td>
+</tr>
+<tr>
+<td>yb_num</td>
+<td>27</td>
+</tr>
+<tr>
+<td>yw_num</td>
+<td>28</td>
+</tr>
+<tr>
+<td>yz_num</td>
+<td>29</td>
+</tr>
+<tr>
+<td>ze_num</td>
+<td>30</td>
+</tr>
+<tr>
+<td>zy_num</td>
+<td>31</td>
+</tr>
+<tr>
+<td>swz_num</td>
+<td>32</td>
+</tr>
+<tr>
+<td>srrb_num</td>
+<td>33</td>
+</tr>
+<tr>
+<td>yp_ex</td>
+<td>34</td>
+</tr>
+<tr>
+<td>seat_types</td>
+<td>35</td>
+</tr>
+</tbody>
+</table>
+
+  </article>
+</div>
+
+
+    
+<div class="container disqus-container">
+  <div id="disqus_thread"></div>
+</div>
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://www.helingfeng.com/2018-04-02/12306/";
+    this.page.identifier = 1522653120;
+  };
+
+  (function() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://blog-nst2eqygcm.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="https://www.helingfeng.com" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2018 Chester-He</li>
+      <li><a href="https://www.helingfeng.com">Home</a></li>
+      
+      <li><a href="https://github.com/Chester-Hee">Github</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica">Replica</a>
+      by <a href="//github.com/sabrinaluo">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+<script>
+  (function() {
+    var cx = '000269192765580162294:atvqvmcbhhe';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+      '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>

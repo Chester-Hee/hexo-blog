@@ -1,0 +1,49 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="code farmer."><title>终端神器 oh my zsh | 追赶日落日出</title><link rel="stylesheet" type="text/css" href="/css/normalize.css"><link rel="stylesheet" type="text/css" href="/css/highlight.css"><link rel="stylesheet" type="text/css" href="/css/font.css"><link rel="stylesheet" type="text/css" href="/css/noise.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?66bdd0a984d281716c78a567d1f39e67";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><article class="wrapper"><div class="post-main"><div class="nav"><nav class="container"><a class="sidebar-nav-item active" href="/">首页</a><a class="sidebar-nav-item" href="/archives">归档</a><a class="sidebar-nav-item" href="/about">关于我</a></nav><div class="container post-meta"><div class="post-tags"><a class="post-tag-link" href="/tags/Linux/">Linux</a></div><div class="post-time">2018-08-02</div></div></div><div class="container post-header"><h1>终端神器 oh my zsh</h1></div><div class="container post-toc"><details class="toc"><summary class="toc-accordion">Table of Contents</summary><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#优化命令终端-oh-my-zsh"><span class="toc-number">1.</span> <span class="toc-text">优化命令终端 oh my zsh</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#oh-my-zsh-配置-zsh-而生"><span class="toc-number">1.0.1.</span> <span class="toc-text">oh my zsh 配置 zsh 而生</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装-oh-my-zsh"><span class="toc-number">1.0.2.</span> <span class="toc-text">安装 oh my zsh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#定制化-zshrc-配置"><span class="toc-number">1.0.3.</span> <span class="toc-text">定制化 .zshrc 配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#插件推荐"><span class="toc-number">1.0.4.</span> <span class="toc-text">插件推荐</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#效果图"><span class="toc-number">1.0.5.</span> <span class="toc-text">效果图</span></a></li></ol></li></ol></details></div><div class="container post-content"><h2 id="优化命令终端-oh-my-zsh"><a href="#优化命令终端-oh-my-zsh" class="headerlink" title="优化命令终端 oh my zsh"></a>优化命令终端 oh my zsh</h2><h4 id="oh-my-zsh-配置-zsh-而生"><a href="#oh-my-zsh-配置-zsh-而生" class="headerlink" title="oh my zsh 配置 zsh 而生"></a>oh my zsh 配置 zsh 而生</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># ubuntu 所有 shells</span><br><span class="line"># /etc/shells: valid login shells</span><br><span class="line">/bin/sh</span><br><span class="line">/bin/dash</span><br><span class="line">/bin/bash</span><br><span class="line">/bin/rbash</span><br><span class="line">/usr/bin/tmux</span><br><span class="line">/bin/zsh</span><br><span class="line">/usr/bin/zsh</span><br></pre></td></tr></table></figure>
+<ul>
+<li>oh my zsh 配置0门槛</li>
+<li>完全兼容 bash</li>
+</ul>
+<h4 id="安装-oh-my-zsh"><a href="#安装-oh-my-zsh" class="headerlink" title="安装 oh my zsh"></a>安装 oh my zsh</h4><p>Github地址：<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="noopener">https://github.com/robbyrussell/oh-my-zsh</a></p>
+<p>安装命令：</p>
+<ul>
+<li>通过curl自动安装，运行下面命令</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过wget自动安装，运行下面命令</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="定制化-zshrc-配置"><a href="#定制化-zshrc-配置" class="headerlink" title="定制化 .zshrc 配置"></a>定制化 .zshrc 配置</h4><ul>
+<li>打开配置</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd </span><br><span class="line">vim .zshrc</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置主题</li>
+</ul>
+<p>;# Set name of the theme to load. Optionally, if you set this to “random”<br>;# it’ll load a random theme each time that oh-my-zsh is loaded.<br>;# See <a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Themes" target="_blank" rel="noopener">https://github.com/robbyrussell/oh-my-zsh/wiki/Themes</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZSH_THEME="robbyrussell"</span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装插件</li>
+</ul>
+<p>;# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)<br>;# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/<br>;# Example format: plugins=(rails git textmate ruby lighthouse)<br>;# Add wisely, as too many plugins slow down shell startup.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plugins=(git)</span><br><span class="line">plugins=(zsh-autosuggestions)</span><br><span class="line">source $ZSH/oh-my-zsh.sh</span><br></pre></td></tr></table></figure>
+<h4 id="插件推荐"><a href="#插件推荐" class="headerlink" title="插件推荐"></a>插件推荐</h4><ul>
+<li>zsh-syntax-highlighting 语法高亮<br><a href="https://github.com/zsh-users/zsh-syntax-highlighting" target="_blank" rel="noopener">https://github.com/zsh-users/zsh-syntax-highlighting</a></li>
+<li>zsh-autosuggestions 命令提示<br><a href="https://github.com/zsh-users/zsh-autosuggestions" target="_blank" rel="noopener">https://github.com/zsh-users/zsh-autosuggestions</a></li>
+</ul>
+<h4 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h4><p><img src="/images/pasted-15.png" alt="upload successful"></p>
+<blockquote>
+<p>工具让开发变得更简单</p>
+</blockquote>
+</div></div><div class="post-main post-comment"></div></article><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.css"><script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script><script src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script><script>$(document).ready(function() {
+  $(".fancybox").fancybox();
+});
+</script></body></html>

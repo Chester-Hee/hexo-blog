@@ -1,0 +1,153 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="code farmer."><title>细细品味 Laravel-Schedule 计划任务的原理 | 追赶日落日出</title><link rel="stylesheet" type="text/css" href="/css/normalize.css"><link rel="stylesheet" type="text/css" href="/css/highlight.css"><link rel="stylesheet" type="text/css" href="/css/font.css"><link rel="stylesheet" type="text/css" href="/css/noise.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?66bdd0a984d281716c78a567d1f39e67";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><article class="wrapper"><div class="post-main"><div class="nav"><nav class="container"><a class="sidebar-nav-item active" href="/">首页</a><a class="sidebar-nav-item" href="/archives">归档</a><a class="sidebar-nav-item" href="/about">关于我</a></nav><div class="container post-meta"><div class="post-tags"><a class="post-tag-link" href="/tags/Laravel/">Laravel</a><a class="post-tag-link" href="/tags/Schedule/">Schedule</a></div><div class="post-time">2018-10-30</div></div></div><div class="container post-header"><h1>细细品味 Laravel-Schedule 计划任务的原理</h1></div><div class="container post-toc"><details class="toc"><summary class="toc-accordion">Table of Contents</summary><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Laravel-Schedule-原理剖析"><span class="toc-number">1.</span> <span class="toc-text">Laravel-Schedule 原理剖析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#事情起因："><span class="toc-number">1.1.</span> <span class="toc-text">事情起因：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文章概述"><span class="toc-number">1.2.</span> <span class="toc-text">文章概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件注册"><span class="toc-number">1.3.</span> <span class="toc-text">事件注册</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Closure-定义调度"><span class="toc-number">1.3.1.</span> <span class="toc-text">Closure 定义调度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Artisan-命令调度"><span class="toc-number">1.3.2.</span> <span class="toc-text">Artisan 命令调度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#队列任务调度"><span class="toc-number">1.3.3.</span> <span class="toc-text">队列任务调度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shell-命令调度"><span class="toc-number">1.3.4.</span> <span class="toc-text">Shell 命令调度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行事件"><span class="toc-number">1.4.</span> <span class="toc-text">运行事件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#schedule-run-是什么？"><span class="toc-number">1.4.1.</span> <span class="toc-text">schedule:run 是什么？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#几点疑问？"><span class="toc-number">1.5.</span> <span class="toc-text">几点疑问？</span></a></li></ol></li></ol></details></div><div class="container post-content"><h2 id="Laravel-Schedule-原理剖析"><a href="#Laravel-Schedule-原理剖析" class="headerlink" title="Laravel-Schedule 原理剖析"></a>Laravel-Schedule 原理剖析</h2><p>介绍原理之前，先自省几句，很长一段时间没有码字啦，那种工作停不下来的习惯得改一改。再忙都应该给自己留出一点空闲的时间，用来总结和提升技能。</p>
+<p>到此为止</p>
+<hr>
+<h3 id="事情起因："><a href="#事情起因：" class="headerlink" title="事情起因："></a>事情起因：</h3><p>昨天，在工作过程中和同事讨论到<code>Laravel-Schedule</code>任务计划的问题。本来，对<code>Schedule</code>没有深入探索，并不理解任务的注册和执行过程，基于这个问题，我快速浏览了一遍这个模块的源代码。<br>并结合自己的理解来描述<code>Laravel-Schedule</code>的基本执行原理，可能有很多不正确的地方，勿喷，如果你有不同的看法，可以在下方留言并一起探索，感谢！</p>
+<h3 id="文章概述"><a href="#文章概述" class="headerlink" title="文章概述"></a>文章概述</h3><p><code>LS</code>计划任务，名称太长，本文使用<code>LS</code>代替<code>Laravel-Schedule</code>长命名。</p>
+<p><code>LS</code>流程分为两个步骤：</p>
+<ul>
+<li>第一步，根据配置的Command命令、Cron表达式进行注册事件；</li>
+<li>第二步，操作系统配置每分钟触发<code>LS</code>，由<code>LS</code>自主完成事件<code>是否符合执行时间过滤</code>，<code>重复性检查</code>，并可选<code>Background</code>或者<code>Foreground</code>进行执行任务。</li>
+</ul>
+<h3 id="事件注册"><a href="#事件注册" class="headerlink" title="事件注册"></a>事件注册</h3><p>在命令行应用程序入口文件<code>artisan</code>首先引入<code>bootstrap/app.php</code><br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$app-&gt;singleton(</span><br><span class="line">    Illuminate\Contracts\Console\Kernel::class,</span><br><span class="line">    App\Console\Kernel::class</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<p>向容器中注册<code>Laravel-Kernel</code>，并使用<code>make</code>构建实例<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$kernel = $app-&gt;make(Illuminate\Contracts\Console\Kernel::class);</span><br></pre></td></tr></table></figure></p>
+<p><code>App\Console\Kernel</code> 继承于 <code>Illuminate\Foundation\Console\Kernel</code></p>
+<p>所以在实例过程中会调用<code>Illuminate\Foundation\Console\Kernel</code>构造方法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(Application $app, Dispatcher $events)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (! defined(<span class="string">'ARTISAN_BINARY'</span>)) &#123;</span><br><span class="line">        define(<span class="string">'ARTISAN_BINARY'</span>, <span class="string">'artisan'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">$this</span>-&gt;app = $app;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;events = $events;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">$this</span>-&gt;app-&gt;booted(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;defineConsoleSchedule();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里又完成了一次事件注册，在应用启动<code>booted</code>完成后回调 <code>$this-&gt;defineConsoleSchedule()</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">defineConsoleSchedule</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;app-&gt;singleton(Schedule::class, <span class="function"><span class="keyword">function</span> <span class="params">($app)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Schedule;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    $schedule = <span class="keyword">$this</span>-&gt;app-&gt;make(Schedule::class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">$this</span>-&gt;schedule($schedule);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重点在于<code>defineConsoleSchedule</code>这个方法，容器中注册并实例化<code>Schedule</code>对象，并使用址传递对<code>Schedule</code>实例进行操作，<strong>这里的操作就是计划任务的事件注册</strong>。</p>
+<p><code>Illuminate\Foundation\Console\Kernel</code> 中的<code>schedule</code>方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Define the application's command schedule.</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span>  \Illuminate\Console\Scheduling\Schedule  $schedule</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">schedule</span><span class="params">(Schedule $schedule)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，我们不需要在这里修改任何代码。上面，我们说过<code>Laravel-Kernel</code>对象的实例类是<code>App\Console\Kernel</code>，他继承了<code>Illuminate\Foundation\Console\Kernel</code>类。<br><br>所以我们在官方文档中也可以清楚看到，计划任务的配置是在<code>App\Console\Kernel</code>中的<code>schedule</code>方法中定义的，例如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Define the application's command schedule.</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span>  \Illuminate\Console\Scheduling\Schedule $schedule</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">schedule</span><span class="params">(Schedule $schedule)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $schedule-&gt;command(<span class="string">'inspire'</span>)-&gt;hourly();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们来看看<strong>官方文档</strong>的解读：</p>
+<h4 id="Closure-定义调度"><a href="#Closure-定义调度" class="headerlink" title="Closure 定义调度"></a>Closure 定义调度</h4><p>使用<code>Closure</code>定义调度。例如，每天使用DB构造器方式来清空数据库一个表</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$schedule-&gt;call(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    DB::table(<span class="string">'recent_users'</span>)-&gt;delete();</span><br><span class="line">&#125;)-&gt;daily();</span><br></pre></td></tr></table></figure>
+<h4 id="Artisan-命令调度"><a href="#Artisan-命令调度" class="headerlink" title="Artisan 命令调度"></a>Artisan 命令调度</h4><p>除了计划 Closure 调用，你还能调度 Artisan 命令 和操作系统命令。举个例子，你可以给 command 方法传递命令名称或者类名称来调度一个 Artisan 命令：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$schedule-&gt;command(<span class="string">'emails:send --force'</span>)-&gt;daily();</span><br></pre></td></tr></table></figure>
+<h4 id="队列任务调度"><a href="#队列任务调度" class="headerlink" title="队列任务调度"></a>队列任务调度</h4><p><code>job</code>方法可以用来调度 队列任务。这个方法提供了一种快捷方式来调度任务，无需使用<code>call</code>方法手动创建闭包来调度任务：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$schedule-&gt;job(<span class="keyword">new</span> Heartbeat)-&gt;everyFiveMinutes();</span><br></pre></td></tr></table></figure>
+<h4 id="Shell-命令调度"><a href="#Shell-命令调度" class="headerlink" title="Shell 命令调度"></a>Shell 命令调度</h4><p>exec 方法可用于向操作系统发出命令：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$schedule-&gt;exec(<span class="string">'node /home/forge/script.js'</span>)-&gt;daily();</span><br></pre></td></tr></table></figure></p>
+<p><code>LS</code> 提供很多提高我们开发效率的执行频率方法</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-&gt;cron(‘<em> </em> <em> </em> <em> </em>‘);</td>
+<td>在自定义的 Cron 时间表上执行该任务</td>
+</tr>
+<tr>
+<td>-&gt;everyMinute();</td>
+<td>每分钟执行一次任务</td>
+</tr>
+<tr>
+<td>-&gt;everyFiveMinutes();</td>
+<td>每五分钟执行一次任务</td>
+</tr>
+<tr>
+<td>-&gt;everyTenMinutes();</td>
+<td>每十分钟执行一次任务</td>
+</tr>
+<tr>
+<td>-&gt;everyFifteenMinutes();</td>
+<td>每十五分钟执行一次任务</td>
+</tr>
+<tr>
+<td>-&gt;everyThirtyMinutes();</td>
+<td>每半小时执行一次任务</td>
+</tr>
+<tr>
+<td>-&gt;hourly();</td>
+<td>每小时执行一次任务</td>
+</tr>
+<tr>
+<td>-&gt;hourlyAt(17);</td>
+<td>每小时的第 17 分钟执行一次任务</td>
+</tr>
+<tr>
+<td>-&gt;daily();</td>
+<td>每天午夜执行一次任务</td>
+</tr>
+<tr>
+<td>-&gt;dailyAt(‘13:00’);</td>
+<td>每天的 13:00 执行一次任务</td>
+</tr>
+<tr>
+<td>-&gt;twiceDaily(1, 13);</td>
+<td>每天的 1:00 和 13:00 分别执行一次任务</td>
+</tr>
+<tr>
+<td>-&gt;weekly();</td>
+<td>每周执行一次任务</td>
+</tr>
+<tr>
+<td>-&gt;monthly();</td>
+<td>每月执行一次任务</td>
+</tr>
+<tr>
+<td>-&gt;monthlyOn(4, ‘15:00’);</td>
+<td>在每个月的第四天的 15:00 执行一次任务</td>
+</tr>
+<tr>
+<td>-&gt;quarterly();</td>
+<td>每季度执行一次任务</td>
+</tr>
+<tr>
+<td>-&gt;yearly();</td>
+<td>每年执行一次任务</td>
+</tr>
+<tr>
+<td>-&gt;timezone(‘America/New_York’);</td>
+<td>设置时区</td>
+</tr>
+</tbody>
+</table>
+<p>了解<code>LS</code>给我们提供的多种任务定义和执行频率设置的方式后，我们回来思考其实现的原理是怎么样的？</p>
+<p><strong><code>schedule</code>方法里的每一句任务的定义，就是构造一个事件对象，并将这个事件对象放到数组里</strong></p>
+<p><code>Illuminate\Console\Scheduling\Schedule.php</code> command方法的核心实现代码如下:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">$this</span>-&gt;events[] = $event = <span class="keyword">new</span> Event(<span class="keyword">$this</span>-&gt;mutex, $command);</span><br></pre></td></tr></table></figure></p>
+<p><code>mutex</code> 这个变量用来控制事件当前时间执行的不可重复性，在这里先不细究。</p>
+<p><strong><code>schedule</code>方法里的每一句调度频率设置，就是表达式的构建</strong></p>
+<p>这个表达式 <code>expression</code> 就是与我们常用<code>crontab</code>表达式是同样的类型，<code>everyTenMinutes()</code> 每十分钟执行一次，其实对应的表达式就是<code>*/10 * * * * *</code>，具体<code>LS</code> 实现代码如下，应该不难看懂。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> $expression = <span class="string">'* * * * * *'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">everyTenMinutes</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;spliceIntoPosition(<span class="number">1</span>, <span class="string">'*/10'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">spliceIntoPosition</span><span class="params">($position, $value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $segments = explode(<span class="string">' '</span>, <span class="keyword">$this</span>-&gt;expression);</span><br><span class="line">    $segments[$position - <span class="number">1</span>] = $value;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;cron(implode(<span class="string">' '</span>, $segments));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个很重要，因为事件的过滤中，需要匹配执行时间是否等于当前时间。</p>
+<h3 id="运行事件"><a href="#运行事件" class="headerlink" title="运行事件"></a>运行事件</h3><p>启动调度器，使用调度器时，只需将以下<code>Cron</code>项目添加到服务器:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* * * * * php /path-to-your-project/artisan schedule:run &gt;&gt; /dev/null 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p>上面这个<code>Cron</code>会每分钟调用一次<code>LS</code>命令调度器。执行<code>schedule:run</code>命令时， <code>LS</code>会根据你的调度运行预定任务。</p>
+<p>让我们带着疑问继续理解<code>LS</code>运行事件原理。</p>
+<h4 id="schedule-run-是什么？"><a href="#schedule-run-是什么？" class="headerlink" title="schedule:run 是什么？"></a>schedule:run 是什么？</h4><p>我们看 <code>Illuminate\Console\Scheduling\ScheduleRunCommand</code> 代码是怎么写的？和普通自定义<code>Artisan</code>命令一样，继承 <code>Command</code> 基类。然后具体任务内容在<code>handle</code>方法里实现。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ScheduleRunCommand</span> <span class="keyword">extends</span> <span class="title">Command</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">handle</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">$this</span>-&gt;schedule-&gt;dueEvents(<span class="keyword">$this</span>-&gt;laravel) <span class="keyword">as</span> $event) &#123;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            $event-&gt;run(<span class="keyword">$this</span>-&gt;laravel);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>dueEvents</code> 完成过滤动作 <code>collect($this-&gt;events)-&gt;filter-&gt;isDue($app)</code> 使用 <code>isDue</code> 方法进行过滤。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">isDue</span><span class="params">($app)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (! <span class="keyword">$this</span>-&gt;runsInMaintenanceMode() &amp;&amp; $app-&gt;isDownForMaintenance()) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;expressionPasses() &amp;&amp;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;runsInEnvironment($app-&gt;environment());</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">expressionPasses</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $date = Carbon::now();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;timezone) &#123;</span><br><span class="line">        $date-&gt;setTimezone(<span class="keyword">$this</span>-&gt;timezone);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> CronExpression::factory(<span class="keyword">$this</span>-&gt;expression)-&gt;isDue($date-&gt;toDateTimeString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实原理很简单，方法<code>expressionPasses</code>通过<code>Carbon</code>第三方扩展包获取当前时间，并与Event实例的<code>Expression</code>进行匹对。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">$this</span>-&gt;getNextRunDate($currentDate, <span class="number">0</span>, <span class="keyword">true</span>)-&gt;getTimestamp() == $currentTime</span><br></pre></td></tr></table></figure>
+<p>如果返回<code>True</code>，那就表示<code>Event</code>需要执行。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$event-&gt;run(<span class="keyword">$this</span>-&gt;laravel);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">(Container $container)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;withoutOverlapping &amp;&amp;</span><br><span class="line">        ! <span class="keyword">$this</span>-&gt;mutex-&gt;create(<span class="keyword">$this</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">$this</span>-&gt;runInBackground</span><br><span class="line">                ? <span class="keyword">$this</span>-&gt;runCommandInBackground($container)</span><br><span class="line">                : <span class="keyword">$this</span>-&gt;runCommandInForeground($container);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>withoutOverlapping</code> 和 <code>mutex</code> 就是在这里控制任务重复执行。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">new</span> Process(</span><br><span class="line">    <span class="keyword">$this</span>-&gt;buildCommand(), base_path(), <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span></span><br><span class="line">))-&gt;run();</span><br></pre></td></tr></table></figure>
+<p>最后，由执行器执行命令任务…done</p>
+<hr>
+<h3 id="几点疑问？"><a href="#几点疑问？" class="headerlink" title="几点疑问？"></a>几点疑问？</h3><p><strong>1.假设每个五分钟执行，比如08:52定义命令调度<code>Command</code>到<code>Schedule</code>，会在08:57时刻执行？</strong></p>
+<p>不会，只会在08:55时刻执行，也就是满足时钟的固定周期。</p>
+<p><strong>2.任务调度的两种执行方式<code>runCommandInBackground</code> 与 <code>runCommandInForeground</code> 有什么区别？</strong></p>
+<p><code>runCommandInBackground</code> 代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">runCommandInBackground</span><span class="params">(Container $container)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;callBeforeCallbacks($container);</span><br><span class="line"></span><br><span class="line">    (<span class="keyword">new</span> Process(</span><br><span class="line">        <span class="keyword">$this</span>-&gt;buildCommand(), base_path(), <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span></span><br><span class="line">    ))-&gt;run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>runCommandInForeground</code> 代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">runCommandInForeground</span><span class="params">(Container $container)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;callBeforeCallbacks($container);</span><br><span class="line"></span><br><span class="line">    (<span class="keyword">new</span> Process(</span><br><span class="line">        <span class="keyword">$this</span>-&gt;buildCommand(), base_path(), <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span></span><br><span class="line">    ))-&gt;run();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">$this</span>-&gt;callAfterCallbacks($container);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>差别在于 <code>$this-&gt;callAfterCallbacks($container)</code> ，是否等待当前任务执行完成，如果选择 <code>runCommandInBackground</code> 方式运行，任务命令直接传递给操作系统进行执行，然后直接返回，等待操作系统执行完成任务后，会执行另一条命令 <code>schedule:finish</code> 通过事件ID()进行异步响应对应的任务事件。</p>
+<p><strong>3.Closure 定义调度，和命令其他方式定义调度是不相同的，详细可以查看<code>CallBackEvent-&gt;run()</code> 同步方式执行</strong></p>
+</div></div><div class="post-main post-comment"></div></article><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.css"><script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script><script src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script><script>$(document).ready(function() {
+  $(".fancybox").fancybox();
+});
+</script></body></html>

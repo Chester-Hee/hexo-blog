@@ -1,0 +1,52 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="code farmer."><title>docker 搭建LNMP环境 | 追赶日落日出</title><link rel="stylesheet" type="text/css" href="/css/normalize.css"><link rel="stylesheet" type="text/css" href="/css/highlight.css"><link rel="stylesheet" type="text/css" href="/css/font.css"><link rel="stylesheet" type="text/css" href="/css/noise.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?66bdd0a984d281716c78a567d1f39e67";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><article class="wrapper"><div class="post-main"><div class="nav"><nav class="container"><a class="sidebar-nav-item active" href="/">首页</a><a class="sidebar-nav-item" href="/archives">归档</a><a class="sidebar-nav-item" href="/about">关于我</a></nav><div class="container post-meta"><div class="post-tags"><a class="post-tag-link" href="/tags/Docker/">Docker</a></div><div class="post-time">2018-05-03</div></div></div><div class="container post-header"><h1>docker 搭建LNMP环境</h1></div><div class="container post-toc"><details class="toc"><summary class="toc-accordion">Table of Contents</summary><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DNMP"><span class="toc-number">1.</span> <span class="toc-text">DNMP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Feature"><span class="toc-number">1.0.1.</span> <span class="toc-text">Feature</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Usage"><span class="toc-number">1.0.2.</span> <span class="toc-text">Usage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选择其他的-PHP-version"><span class="toc-number">1.0.3.</span> <span class="toc-text">选择其他的 PHP version?</span></a></li></ol></li></ol></details></div><div class="container post-content"><h1 id="DNMP"><a href="#DNMP" class="headerlink" title="DNMP"></a>DNMP</h1><p>Docker 快速搭建<code>Nginx</code> <code>MySQL</code> <code>PHP</code> 开发环境，并提供丰富的支持。 </p>
+<h3 id="Feature"><a href="#Feature" class="headerlink" title="Feature"></a>Feature</h3><ol>
+<li>MIT 完全开源.</li>
+<li>多版本 PHP 环境支持，可以选择 <code>5.4</code> <code>5.6</code> <code>7.2</code>.</li>
+<li>一个环境可以配置多个项目.</li>
+<li>支持 HTTPS .</li>
+<li>可以配置不同主机服务的 PHP 源程序.</li>
+<li>MySQL 数据目录映射本地.</li>
+<li>所有的环境配置文件都映射本地.</li>
+<li>所有的日志文件都映射本地.</li>
+<li>可以在构建 Dockerfile 修改命令安装 PHP 扩展依赖.</li>
+<li>适用于所有操作系统.</li>
+</ol>
+<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><ol>
+<li><p>安装 <code>git</code>, <code>docker</code> and <code>docker-compose</code>;</p>
+</li>
+<li><p>git 克隆项目:</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/helingfeng/dnmp.git</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="4">
+<li><p>启动 docker containers:</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd dnmp</span><br><span class="line">$ docker-compose up</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置 hosts</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># sudo vim /etc/hosts</span><br><span class="line"></span><br><span class="line">127.0.0.1 www.demo.com</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="6">
+<li>浏览器访问 <a href="https://www.demo.com" target="_blank" rel="noopener">https://www.demo.com</a> </li>
+</ol>
+<p>可以看到下面成功页面 php_info</p>
+<p><img src="https://github.com/helingfeng/dnmp/raw/master/demo.png" alt="demo"></p>
+<h3 id="选择其他的-PHP-version"><a href="#选择其他的-PHP-version" class="headerlink" title="选择其他的 PHP version?"></a>选择其他的 PHP version?</h3><p>默认选择最新的 PHP 版本:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose up</span><br></pre></td></tr></table></figure></p>
+<p>可以通过启动选项选择 PHP5.4 or PHP5.6 :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose -f docker-compose54.yml up</span><br><span class="line">$ docker-compose -f docker-compose56.yml up</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>Nginx 配置 HTTPS</li>
+</ol>
+<p>运行自动脚本 gencert.sh，并输出参数 DOMAIN（可以为泛域 *.baidu.com）</p>
+<p>配置 Nginx 即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssl on;</span><br><span class="line">ssl_certificate /etc/nginx/conf.d/certs/*.baidu.com.crt;</span><br><span class="line">ssl_certificate_key /etc/nginx/conf.d/certs/*.baidu.com.key;</span><br></pre></td></tr></table></figure></p>
+</div></div><div class="post-main post-comment"></div></article><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.css"><script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script><script src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script><script>$(document).ready(function() {
+  $(".fancybox").fancybox();
+});
+</script></body></html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="code farmer."><title>数据基础 - 线性代数 第一章 | 追赶日落日出</title><link rel="stylesheet" type="text/css" href="/css/normalize.css"><link rel="stylesheet" type="text/css" href="/css/highlight.css"><link rel="stylesheet" type="text/css" href="/css/font.css"><link rel="stylesheet" type="text/css" href="/css/noise.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?66bdd0a984d281716c78a567d1f39e67";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><article class="wrapper"><div class="post-main"><div class="nav"><nav class="container"><a class="sidebar-nav-item active" href="/">首页</a><a class="sidebar-nav-item" href="/archives">归档</a><a class="sidebar-nav-item" href="/about">关于我</a></nav><div class="container post-meta"><div class="post-tags"><a class="post-tag-link" href="/tags/数学基础/">数学基础</a><a class="post-tag-link" href="/tags/算法/">算法</a></div><div class="post-time">2018-05-17</div></div></div><div class="container post-header"><h1>数据基础 - 线性代数 第一章</h1></div><div class="container post-toc"><details class="toc"><summary class="toc-accordion">Table of Contents</summary><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线性方程"><span class="toc-number">2.</span> <span class="toc-text">线性方程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是线性方程组"><span class="toc-number">2.1.</span> <span class="toc-text">什么是线性方程组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线性方程组的解"><span class="toc-number">2.2.</span> <span class="toc-text">线性方程组的解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵记号"><span class="toc-number">2.3.</span> <span class="toc-text">矩阵记号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方程组解法"><span class="toc-number">2.4.</span> <span class="toc-text">方程组解法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线性方程组的两个基本问题"><span class="toc-number">2.5.</span> <span class="toc-text">线性方程组的两个基本问题</span></a></li></ol></li></ol></details></div><div class="container post-content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>大学曾经引以为傲的数学成绩，毕业工作的这两年，沉浸在业务代码中，数学理论知识被时间稀释的差不多了。<br>伴随机器学习和大数据分析的发展，不甘心，想给自己的未来新增一项不错的技能（机器学习与大数据分析）</p>
+<p>想要学好机器学习，最不可或缺的是数学基础理论。虽然，我们总是对机器学习很感兴趣，不可思议，但是想要掌握它，必须经过枯燥的数学基础理论学习。<br>接下来，我想利用我的空闲时间去接受这些枯燥的理论，并尝试应用于实际开发和产品。</p>
+<h2 id="线性方程"><a href="#线性方程" class="headerlink" title="线性方程"></a>线性方程</h2><p>首先，我们先了解什么是线性方程，学会如何解线性方程组，并掌握如何判断线性方程是否存在解。</p>
+<h3 id="什么是线性方程组"><a href="#什么是线性方程组" class="headerlink" title="什么是线性方程组"></a>什么是线性方程组</h3><p>包含未知数 <img src="http://latex.codecogs.com/gif.latex?\dpi{80}&space;\LARGE&space;x_{1}&space;,&space;x_{2}&space;,&space;x_{3}&space;...&space;x_{n}" title="\LARGE x_{1} , x_{2} , x_{3} ... x_{n}"> 的线性方程，形如</p>
+<p><img src="http://latex.codecogs.com/png.latex?\dpi{80}&space;\LARGE&space;a_{1}&space;x_{1}&space;&plus;&space;a_{2}&space;x_{2}&space;&plus;&space;a_{n}&space;x_{n}&space;=&space;b" title="\LARGE a_{1} x_{1} + a_{2} x_{2} + a_{n} x_{n} = b"></p>
+<p>其中，<code>b</code> 与系数 <code>a</code> 都是实数或复数，通常是已知数。</p>
+<p><em>线性方程组</em>是由一个或多个这样包含相同变量 <img src="http://latex.codecogs.com/gif.latex?\dpi{80}&space;\LARGE&space;x_{1}&space;,&space;x_{2}&space;,&space;x_{3}&space;...&space;x_{n}" title="\LARGE x_{1} , x_{2} , x_{3} ... x_{n}"> 的线性方程</p>
+<h3 id="线性方程组的解"><a href="#线性方程组的解" class="headerlink" title="线性方程组的解"></a>线性方程组的解</h3><p>线性方程组的解有三种情况</p>
+<ul>
+<li>无解</li>
+<li>有且只有一个解</li>
+<li>有无穷个解</li>
+</ul>
+<p>例如，一个方程组有两个二元线性方程组成，相当于二维空间的两条直线，两条直线不一定相交。即，相交则存在一个解，平行则不存在解，重合则包含无数个解。</p>
+<h3 id="矩阵记号"><a href="#矩阵记号" class="headerlink" title="矩阵记号"></a>矩阵记号</h3><p>例如方程组</p>
+<ul>
+<li>方程一：<img src="http://latex.codecogs.com/gif.latex?\dpi{80}&space;\LARGE&space;x_{1}&space;-&space;2x_{2}&space;&plus;&space;x_{3}&space;=&space;0" title="\LARGE x_{1} - 2x_{2} + x_{3} = 0"></li>
+<li>方程二：<img src="http://latex.codecogs.com/gif.latex?\dpi{80}&space;\LARGE&space;2x_{2}&space;-&space;8x_{3}&space;=&space;8" title="\LARGE 2x_{2} - 8x_{3} = 8"></li>
+<li>方程三：<img src="http://latex.codecogs.com/gif.latex?\dpi{80}&space;\LARGE&space;-4x_{1}&space;&plus;&space;5x_{2}&space;&plus;&space;9x_{3}&space;=&space;-9" title="\LARGE -4x_{1} + 5x_{2} + 9x_{3} = -9"></li>
+</ul>
+<p>矩阵：</p>
+<p><img src="http://latex.codecogs.com/gif.latex?\dpi{80}&space;\LARGE&space;\begin{bmatrix}&space;1&space;&&space;-2&space;&&space;1&space;\\&space;0&space;&&space;2&space;&&space;-8\\&space;-4&space;&&space;5&space;&&space;9&space;\end{bmatrix}" title="\LARGE \begin{bmatrix} 1 & -2 & 1 \\ 0 & 2 & -8\\ -4 & 5 & 9 \end{bmatrix}"></p>
+<p>称为方程组的<code>系数矩阵</code></p>
+<p>矩阵：</p>
+<p><img src="http://latex.codecogs.com/gif.latex?\dpi{80}&space;\LARGE&space;\begin{bmatrix}&space;1&space;&&space;-2&space;&&space;1&space;&&space;0\\&space;0&space;&&space;2&space;&&space;-8&space;&&space;8\\&space;-4&space;&&space;5&space;&&space;9&space;&&space;-9&space;\end{bmatrix}" title="\LARGE \begin{bmatrix} 1 & -2 & 1 & 0\\ 0 & 2 & -8 & 8\\ -4 & 5 & 9 & -9 \end{bmatrix}"></p>
+<p>称为方程组的<code>增广矩阵</code></p>
+<h3 id="方程组解法"><a href="#方程组解法" class="headerlink" title="方程组解法"></a>方程组解法</h3><ul>
+<li>方程一：<img src="http://latex.codecogs.com/gif.latex?\dpi{80}&space;\LARGE&space;x_{1}&space;-&space;2x_{2}&space;&plus;&space;x_{3}&space;=&space;0" title="\LARGE x_{1} - 2x_{2} + x_{3} = 0"></li>
+<li>方程二：<img src="http://latex.codecogs.com/gif.latex?\dpi{80}&space;\LARGE&space;2x_{2}&space;-&space;8x_{3}&space;=&space;8" title="\LARGE 2x_{2} - 8x_{3} = 8"></li>
+<li>方程三：<img src="http://latex.codecogs.com/gif.latex?\dpi{80}&space;\LARGE&space;-4x_{1}&space;&plus;&space;5x_{2}&space;&plus;&space;9x_{3}&space;=&space;-9" title="\LARGE -4x_{1} + 5x_{2} + 9x_{3} = -9"></li>
+</ul>
+<p>简单来说，我们可以用方程一的 x1 去消除其他方程的 x1 , 用方程二的 x2 去消除其他方程的 x2 , 依次类推，我们可以得到一个简单的等价方程。</p>
+<p>化简方程组的三种基本变换：</p>
+<ul>
+<li>把某个方程换成另一个方程的倍数和</li>
+<li>交换两个方程的位置</li>
+<li>把某一个方程的所有的项乘以一个非零的常熟</li>
+</ul>
+<p>对于增广矩阵的等价变换</p>
+<ul>
+<li>倍加交换，把某行换成它本身与另外一行的倍数的和</li>
+<li>对换交换，把两行对换</li>
+<li>倍乘交换，把某一行的所有元素乘以相同的非零数</li>
+</ul>
+<p>线性方程组合增广矩阵是行等价的，他们具有相同的解集</p>
+<h3 id="线性方程组的两个基本问题"><a href="#线性方程组的两个基本问题" class="headerlink" title="线性方程组的两个基本问题"></a>线性方程组的两个基本问题</h3><ul>
+<li>方程组是否相容，即是否至少存在一个解</li>
+<li>若存在解，是否解唯一</li>
+</ul>
+</div></div><div class="post-main post-comment"></div></article><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.css"><script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script><script src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script><script>$(document).ready(function() {
+  $(".fancybox").fancybox();
+});
+</script></body></html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="code farmer."><title>数据建模-基本理论 | 追赶日落日出</title><link rel="stylesheet" type="text/css" href="/css/normalize.css"><link rel="stylesheet" type="text/css" href="/css/highlight.css"><link rel="stylesheet" type="text/css" href="/css/font.css"><link rel="stylesheet" type="text/css" href="/css/noise.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?66bdd0a984d281716c78a567d1f39e67";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><article class="wrapper"><div class="post-main"><div class="nav"><nav class="container"><a class="sidebar-nav-item active" href="/">首页</a><a class="sidebar-nav-item" href="/archives">归档</a><a class="sidebar-nav-item" href="/about">关于我</a></nav><div class="container post-meta"><div class="post-tags"><a class="post-tag-link" href="/tags/数学基础/">数学基础</a><a class="post-tag-link" href="/tags/算法/">算法</a></div><div class="post-time">2018-05-03</div></div></div><div class="container post-header"><h1>数据建模-基本理论</h1></div><div class="container post-toc"><details class="toc"><summary class="toc-accordion">Table of Contents</summary><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本理论"><span class="toc-number">1.</span> <span class="toc-text">基本理论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模型分类"><span class="toc-number">1.1.</span> <span class="toc-text">模型分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#形象模型"><span class="toc-number">1.1.1.</span> <span class="toc-text">形象模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#抽象模型"><span class="toc-number">1.1.2.</span> <span class="toc-text">抽象模型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数学建模步骤"><span class="toc-number">1.2.</span> <span class="toc-text">数学建模步骤</span></a></li></ol></li></ol></details></div><div class="container post-content"><h2 id="基本理论"><a href="#基本理论" class="headerlink" title="基本理论"></a>基本理论</h2><h3 id="模型分类"><a href="#模型分类" class="headerlink" title="模型分类"></a>模型分类</h3><p>用模型替代原型进行分类，可分为<code>形象模型</code> <code>抽象模型</code></p>
+<h4 id="形象模型"><a href="#形象模型" class="headerlink" title="形象模型"></a>形象模型</h4><ul>
+<li>直观模型</li>
+<li>物理模型</li>
+</ul>
+<h4 id="抽象模型"><a href="#抽象模型" class="headerlink" title="抽象模型"></a>抽象模型</h4><ul>
+<li>思维模型</li>
+<li>符号模型</li>
+<li>数学模型</li>
+</ul>
+<p>数学模型 <code>是由数字字母或者其他数学符号组成，描述现实对象数量规律的数学公式、图形或者算法。</code></p>
+<h3 id="数学建模步骤"><a href="#数学建模步骤" class="headerlink" title="数学建模步骤"></a>数学建模步骤</h3><p>数学建模五步法</p>
+<ol>
+<li>提出问题</li>
+</ol>
+<p>大家可能会想,题目不是已经给出问题了吗? 是的,但是这里的提出问题是指：用数学语言去表达。首先，题目一定要通读若干遍，“看不懂，读题目；看不懂，读题目”，如此反复循环的同时查阅相关资料。这通常需要大量的工作，而且要根据题目的特点做一些假设。<br>看的差不多了，就开始用数学形式提出问题，当然，在这之前，先引用或者定义一些专业术语。 接下来进行符号说明，统一符号（这点很重要，三个人之间便于沟通，论文便于展现），并列出整个问题涉及的变量，包括恰当的单位，列出我们已知或者作出的假设（用数学语言描述，比如等式，不等式）。 做完这些准备工作后，就开始正式提出问题啦。用明确的数学语言写出这个问题的表达式，加上之前的准备工作，就构成了完整的问题。<br>这部分的内容反映到论文结构上，相当于前言，问题提出，模型建立部分。注意，刚开始建立的模型很挫没关系，我们随时可以返回来进行修改的。</p>
+<ol start="2">
+<li>选择建模方法</li>
+</ol>
+<p>在有了用数学语言表述的问题后，我们需要选择一个或者多个数学方法来获得解。 许多问题，尤其是运筹优化，微分方程的题目，一般都可以表述<br>成一个已有有效的标准求解形式。这里可以通过查阅相关领域的文献，获得具体的方法。为什么不是查阅教材呢？基本上教材讲的都是基础的，针对特定问题的，教材上一般找不到现成的方法，但是教材依然是很重要的基础工具，有时候想不出思路，教材（比如姜启源那本）翻来翻去，会产生灵感，可以用什么模型。</p>
+<ol start="3">
+<li>推导模型的公式</li>
+</ol>
+<p>我们要把第二步的方法实现出来，也就是论文的模型建立部分。我们要对建立的问题进行变形，推导，转化为可以运行标准方法解答的形式。这部<br>分通常是借鉴参考文献的过程，做一些修改，以适应本题的情况。</p>
+<ol start="4">
+<li>求解模型</li>
+</ol>
+<p>这里是编程的队友登场的时刻了。</p>
+<ul>
+<li>统计模型：SPSS,Eviews，Stata ，都是菜单式操作，easy的。</li>
+<li>数据分析：R，数据库SQL Server，IBM DB2</li>
+<li>微分方程：Maple,Mathematic,MATLAB</li>
+<li>运筹规划：Matlab，Lingo</li>
+<li>智能算法：Matlab，R</li>
+<li>时间序列：统计模型中的那些软件，或者R，Matlab </li>
+<li>图像处理：Matlab，C++</li>
+</ul>
+<p>总结： Matlab是必须的，再来个SPSS，一般情况下够用了。</p>
+<ol start="5">
+<li>回答问题</li>
+</ol>
+<p>也就是论文的讨论部分。这部分是对你整篇论文成果的总结，一定要写的有深度。除此之外，通常还要写上一些灵敏度分析，如果是统计模型的话，要有模型检验。论文通常会需要画一些图表，可以使用Matlab、R等软件来画跟数据有关的图，使用Visio或者PPT画流程图之类的图。</p>
+</div></div><div class="post-main post-comment"></div></article><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.css"><script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script><script src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script><script>$(document).ready(function() {
+  $(".fancybox").fancybox();
+});
+</script></body></html>

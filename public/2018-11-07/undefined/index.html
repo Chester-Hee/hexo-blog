@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    Autoload类的自动加载 | 追赶日落日出
+  </title>
+  <meta name="description" content="code farmer.">
+  
+  <meta name="keywords" content="
+  PHP,Composer
+  ">
+  
+  <meta name="author" content="Chester-He">
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+  <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+<script>
+  var _hmt = _hmt || [];
+  (function(){var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?66bdd0a984d281716c78a567d1f39e67";
+    var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm, s);})();
+</script>
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+</head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">This website</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/archives">Archives</a></li>
+        
+        
+        <li><a href="/categories">Categories</a></li>
+        
+        
+        <li><a href="/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="https://avatars1.githubusercontent.com/u/4921878?s=460&amp;v=4"> <i class="fa fa-caret-down"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/archives" class="header-toolbar-left"><i class="fa fa-file-text"></i> Posts </a>
+        <a href="/archives" class="header-toolbar-right"> 59 </a>
+      </li>
+      <li>
+        <a href="/tags" class="header-toolbar-left"><i class="fa fa-tags"></i> Tags </a>
+        <a href="/tags" class="header-toolbar-right"> 35 </a>
+      </li>
+      <li>
+        <a href="/categories" class="header-toolbar-left"><i class="fa fa-folder-open"></i> Categories </a>
+        <a href="/categories" class="header-toolbar-right"> 27 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/">追赶日落日出</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    Chester-He
+
+    <span class="post-date float-right" title="{{moment(1541570400000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1541570400000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>Autoload类的自动加载</h1>
+    <h2 id="类的自动加载"><a href="#类的自动加载" class="headerlink" title="类的自动加载"></a>类的自动加载</h2><p>PHP面向对象程序设计过程中，必然需要定义很多类，也就是非常多的.PHP文件。在PHP5之前，我们如果在一个类中引用另一个类，需要在这个类的文件头部加上<code>require</code>或者<code>include</code>。<br>但是，如果我们的系统非常复杂，涉及极多的类时，这样的操作显得非常繁琐。</p>
+<p>在PHP5中，已经不再需要这样了。 <code>spl_autoload_register()</code> 函数可以注册任意数量的自动加载器，当使用尚未被定义的类和接口时自动去加载。通过注册自动加载器，脚本引擎在PHP出错失败前有了最后一个机会加载所需的类。</p>
+<hr>
+<p>尝试分别从 MyClass1.php 和 MyClass2.php 文件中加载 MyClass1 和 MyClass2 类</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">spl_autoload_register(<span class="function"><span class="keyword">function</span> <span class="params">($class_name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">require_once</span> $class_name . <span class="string">'.php'</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">$obj  = <span class="keyword">new</span> MyClass1();</span><br><span class="line">$obj2 = <span class="keyword">new</span> MyClass2();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>将一个异常抛给不存在的自定义异常处理函数</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">spl_autoload_register(<span class="function"><span class="keyword">function</span> <span class="params">($name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Want to load $name.\n"</span>;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> MissingException(<span class="string">"Unable to load $name."</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    $obj = <span class="keyword">new</span> NonLoadableClass();</span><br><span class="line">&#125; <span class="keyword">catch</span> (<span class="keyword">Exception</span> $e) &#123;</span><br><span class="line">    <span class="keyword">echo</span> $e-&gt;getMessage(), <span class="string">"\n"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Composer-自动加载"><a href="#Composer-自动加载" class="headerlink" title="Composer 自动加载"></a>Composer 自动加载</h3><p><code>composer</code> 提供了四种自动加载类型</p>
+<ul>
+<li>classmap</li>
+<li>psr-0</li>
+<li>psr-4</li>
+<li>files</li>
+</ul>
+<p>这几种自动加载平常的框架都用到，通常来看，项目代码用<code>psr-4</code>自动加载， 如<code>Laravel</code>框架的函数库<code>helper</code>用<code>files</code>自动加载，<code>development</code>相关用<code>classmap</code>自动加载，而<code>psr-0</code>已经弃用，有事兼容古老的代码还会用到。</p>
+<h4 id="classmap"><a href="#classmap" class="headerlink" title="classmap"></a>classmap</h4><p><code>composer</code>会扫描指定目录下以<code>.php</code> 或<code>.inc</code>结尾的文件中的<code>class</code>，生成<code>class</code>到指定<code>file-path</code>的映射(Key-Value)，并加入新生成的<code>vendor/composer/autoload_classmap.php</code>文件中</p>
+<p>例如：</p>
+<p>配置扫描路径<code>src</code><br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"autoload"</span>: &#123;</span><br><span class="line">    <span class="attr">"classmap"</span>: [<span class="string">"src/"</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其生成结果如下<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">array</span>(</span><br><span class="line">    <span class="string">'BaseController'</span> =&gt; $baseDir . <span class="string">'/src/BaseController.php'</span></span><br><span class="line">);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="psr-4"><a href="#psr-4" class="headerlink" title="psr-4"></a>psr-4</h4><p>在<code>composer.json</code>里是这样进行配置的：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"autoload"</span>: &#123;</span><br><span class="line">    <span class="attr">"psr-4"</span>: &#123;</span><br><span class="line">      <span class="attr">"Foo\\"</span>: <span class="string">"src/"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行<code>composer install</code>更新自动加载。照<code>PSR-4</code>的规则，当在<code>index.php</code>中试图<code>new Foo\Bar\Baz</code>这个<code>class</code>时，<code>composer</code>会自动去寻找 <code>src/Bar/Baz.php&quot;</code> 这个文件，如果它存在则进行加载。</p>
+<h4 id="files"><a href="#files" class="headerlink" title="files"></a>files</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"autoload"</span>: &#123;</span><br><span class="line">    <span class="attr">"files"</span>: [<span class="string">"src/MyLibrary/functions.php"</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行<code>composer install</code>更新自动加载。<code>Files</code>方式，就是手动指定供直接加载的文件。比如说我们有一系列全局的<code>helper functions</code>，可以放到一个<code>helper</code>文件里然后直接进行加载，也就是说，当你用<code>require &#39;vendor/autoload.php&#39;</code>加载自动加载类时自动将<code>files</code>里的文件加载进来了，你直接使用就行了。</p>
+
+  </article>
+</div>
+
+
+    
+<div class="container disqus-container">
+  <div id="disqus_thread"></div>
+</div>
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://www.helingfeng.com/2018-11-07/undefined/";
+    this.page.identifier = 1541570400;
+  };
+
+  (function() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://blog-nst2eqygcm.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="https://www.helingfeng.com" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2018 Chester-He</li>
+      <li><a href="https://www.helingfeng.com">Home</a></li>
+      
+      <li><a href="https://github.com/Chester-Hee">Github</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica">Replica</a>
+      by <a href="//github.com/sabrinaluo">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+<script>
+  (function() {
+    var cx = '000269192765580162294:atvqvmcbhhe';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+      '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>

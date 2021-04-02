@@ -1,0 +1,52 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="code farmer."><title>POST 请求 application/x-www-form-urlencoded 与 multipart/form-data 区别 | 追赶日落日出</title><link rel="stylesheet" type="text/css" href="/css/normalize.css"><link rel="stylesheet" type="text/css" href="/css/highlight.css"><link rel="stylesheet" type="text/css" href="/css/font.css"><link rel="stylesheet" type="text/css" href="/css/noise.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?66bdd0a984d281716c78a567d1f39e67";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><article class="wrapper"><div class="post-main"><div class="nav"><nav class="container"><a class="sidebar-nav-item active" href="/">首页</a><a class="sidebar-nav-item" href="/archives">归档</a><a class="sidebar-nav-item" href="/about">关于我</a></nav><div class="container post-meta"><div class="post-tags"><a class="post-tag-link" href="/tags/POST/">POST</a></div><div class="post-time">2019-08-10</div></div></div><div class="container post-header"><h1>POST 请求 application/x-www-form-urlencoded 与 multipart/form-data 区别</h1></div><div class="container post-toc"><details class="toc"><summary class="toc-accordion">Table of Contents</summary><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#application-x-www-form-urlencoded"><span class="toc-number">1.</span> <span class="toc-text">application/x-www-form-urlencoded</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#multipart-form-data"><span class="toc-number">2.</span> <span class="toc-text">multipart/form-data</span></a></li></ol></details></div><div class="container post-content"><p>如何正确选择 <code>Form</code> 的 <code>Content-type</code> 类型？</p>
+<ul>
+<li><ol>
+<li><code>application/x-www-form-urlencoded</code>，表单默认的 <code>Content-type</code> 类型，支持 <code>ASCII</code> 的 <code>text</code> 文本内容</li>
+</ol>
+</li>
+<li><ol start="2">
+<li><code>multipart/form-data</code>，允许提交表单包含： <code>files</code>，<code>non-ASCII</code>，<code>Binary</code></li>
+</ol>
+</li>
+<li><ol start="3">
+<li><code>Row</code>，用于发送纯文本，或 <code>JSON</code> ，或其他类型字符串，客户端不会对数据做任何的修改</li>
+</ol>
+</li>
+<li><ol start="4">
+<li><code>Binary</code>，用于请求需要附带非文本的数据，比如 <code>video/audio</code> 或者 <code>images</code> 或者其他 <code>Binary</code> 数据文件</li>
+</ol>
+</li>
+</ul>
+<h2 id="application-x-www-form-urlencoded"><a href="#application-x-www-form-urlencoded" class="headerlink" title="application/x-www-form-urlencoded"></a>application/x-www-form-urlencoded</h2><p>当表单使用 <code>application/x-www-form-urlencoded</code> 时，需要对参数进行<code>urlencode 编码</code>和<code>序列化</code></p>
+<p>如，表单提交参数（key-value）为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">param1:website</span><br><span class="line">param2:https://www.google.com</span><br></pre></td></tr></table></figure></p>
+<p>经过 <code>urlencode</code> 编码后：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">param1:website</span><br><span class="line">param2:https%3A%2F%2Fwww.google.com</span><br></pre></td></tr></table></figure>
+<p>再经过序列化，得到结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">param1=website&amp;param2=https%3A%2F%2Fwww.google.com</span><br></pre></td></tr></table></figure>
+<h2 id="multipart-form-data"><a href="#multipart-form-data" class="headerlink" title="multipart/form-data"></a>multipart/form-data</h2><p>一个 <code>multipart/form-data</code> 消息体，包含多个块组成，每个块代表一个有效的表单控件，并使用 <code>boundary</code> 的字符串分割：</p>
+<ul>
+<li><ol>
+<li>第一部分，<code>Content-Disposition: form-data</code> 参数名称，如，<code>name=&quot;my_control</code></li>
+</ol>
+</li>
+<li><ol start="2">
+<li>第二部分，<code>Content-Type: text/plain</code></li>
+</ol>
+</li>
+</ul>
+<p>例如表单：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;FORM action=&quot;http://server.com/cgi/handle&quot;</span><br><span class="line">       enctype=&quot;multipart/form-data&quot;</span><br><span class="line">       method=&quot;post&quot;&gt;</span><br><span class="line">   &lt;P&gt;</span><br><span class="line">   What is your name? &lt;INPUT type=&quot;text&quot; name=&quot;submit-name&quot;&gt;&lt;BR&gt;</span><br><span class="line">   What files are you sending? &lt;INPUT type=&quot;file&quot; name=&quot;files&quot;&gt;&lt;BR&gt;</span><br><span class="line">   &lt;INPUT type=&quot;submit&quot; value=&quot;Send&quot;&gt;</span><br><span class="line">   &lt;INPUT type=&quot;reset&quot;&gt;</span><br><span class="line">&lt;/FORM&gt;</span><br></pre></td></tr></table></figure>
+<p>假设，<code>submit-name</code> 输入 <code>Larry</code> 文本，<code>files</code> 选择文件 <code>file1.txt</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: multipart/form-data; boundary=AaB03x</span><br><span class="line"></span><br><span class="line">--AaB03x</span><br><span class="line">Content-Disposition: form-data; name=&quot;submit-name&quot;</span><br><span class="line"></span><br><span class="line">Larry</span><br><span class="line">--AaB03x</span><br><span class="line">Content-Disposition: form-data; name=&quot;files&quot;; filename=&quot;file1.txt&quot;</span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">... contents of file1.txt ...</span><br><span class="line">--AaB03x--</span><br></pre></td></tr></table></figure>
+<p>参考文献：<a href="https://www.w3.org/TR/html401/interact/forms.html#h-17.13.4" target="_blank" rel="noopener">https://www.w3.org/TR/html401/interact/forms.html#h-17.13.4</a></p>
+</div></div><div class="post-main post-comment"></div></article><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.css"><script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script><script src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script><script>$(document).ready(function() {
+  $(".fancybox").fancybox();
+});
+</script></body></html>

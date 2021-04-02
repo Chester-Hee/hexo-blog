@@ -1,0 +1,47 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="code farmer."><title>《代码整洁之道》读书笔记（一） | 追赶日落日出</title><link rel="stylesheet" type="text/css" href="/css/normalize.css"><link rel="stylesheet" type="text/css" href="/css/highlight.css"><link rel="stylesheet" type="text/css" href="/css/font.css"><link rel="stylesheet" type="text/css" href="/css/noise.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?66bdd0a984d281716c78a567d1f39e67";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><article class="wrapper"><div class="post-main"><div class="nav"><nav class="container"><a class="sidebar-nav-item active" href="/">首页</a><a class="sidebar-nav-item" href="/archives">归档</a><a class="sidebar-nav-item" href="/about">关于我</a></nav><div class="container post-meta"><div class="post-tags"><a class="post-tag-link" href="/tags/重构/">重构</a></div><div class="post-time">2018-06-04</div></div></div><div class="container post-header"><h1>《代码整洁之道》读书笔记（一）</h1></div><div class="container post-toc"><details class="toc"><summary class="toc-accordion">Table of Contents</summary><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#精益（Lean）代码整洁5S原则"><span class="toc-number">1.</span> <span class="toc-text">精益（Lean）代码整洁5S原则</span></a></li></ol></details></div><div class="container post-content"><p>自上世纪末，有关仅以测试和代码驱动设计的概念一去不复返。相对于任何宏伟的愿景，对于细节的关注甚至是更为关键的专业性基础。</p>
+<p>当然，开发人员通过小型的实践获得可用于大型实践的技能和信用度。</p>
+<p>其次，宏大的愿景中最细小的部分没有把握好，都会将整个大局的魅力毁灭殆尽。</p>
+<p>这就是整洁代码之所系。<strong>神在细节之中</strong></p>
+<p><strong>软件的生命周期= 20%生产 + 80%维护</strong></p>
+<p>即便是汽车行业里，大量的工作也并不是在于生产而在于维护或者避免维护。对于软件而言，百分之八十或者更多的工作量集中在我们美其名曰的“维护”的事情上：其实就是修修补补。</p>
+<h4 id="精益（Lean）代码整洁5S原则"><a href="#精益（Lean）代码整洁5S原则" class="headerlink" title="精益（Lean）代码整洁5S原则"></a>精益（Lean）代码整洁5S原则</h4><ul>
+<li><p>整理 Seiri：搞清楚事物之所在，或谓sort排序。</p>
+</li>
+<li><p>整顿 Seition:或整齐systematize系统化一词。物皆有其位，而后物尽归其位（A place for everything , and everything in its place）.</p>
+</li>
+<li><p>清楚 Seiso:shine对于那种四处遗弃的带注释的代码及反映过往或期望的无注释代码，除之后快。</p>
+</li>
+<li><p>清洁 Seiketsu：标准化，使用一贯的代码风格和实践手段。</p>
+</li>
+<li><p>身美 Shisuke:自律，在实践中惯侧规程，乐于改进。</p>
+</li>
+</ul>
+<blockquote>
+<p>A stitch in time saves nine.</p>
+</blockquote>
+<p>即便是在宏伟的建筑作品中，我们也听到关注细节的回响。无论是架构还是代码都不强求完美，只有求竭诚尽力而已。<strong>人孰能无过，神亦容之</strong></p>
+<hr>
+<p><strong><em>催赶着退出产品，代码写的乱七八糟。特性越来越多，代码也越来越烂，最后再也没有办法管理这些代码。是糟糕的代码毁掉了一家公司</em></strong></p>
+<p>随着混乱的增加，团队的生产力也持续下降，趋于零。</p>
+<p>管理层就只有一件事情可以做了：增加更多的人手到项目中，期望提升生产力。可是新人不熟悉系统的设计。他们不明白什么的修改符合设计意图，什么样的修改违背设计意图。而且，他们以及团队中其他人背负着提升生产力的可怕压力。于是他们制造更多的混乱，驱动生产力向零端不断下降。</p>
+<p><img src="/images/pasted-13.png" alt="upload successful"></p>
+<p><strong>花时间保存代码整洁不但有关效率，还有关生存。</strong></p>
+<p>在很多时候，我们编程时，其实并不是把所有时间都花在写代码上，更特别的是，我们大部分时间都花在读代码中。</p>
+<p><strong>经过测试，大致得出这样一个公式：编码 = 90%看代码 + 10%写代码</strong></p>
+<p>可以看出，容易让人看懂的代码，更容易修改。</p>
+<p>很多时候，我们在混乱状况下，写出了很多糟糕的代码，我们不要责怪管理层，因为我们是<strong>自作自受，我们太不专业。</strong></p>
+<p>同理，程序员遵从从不了解混乱风险的经理的意愿，也是不专业的做法。</p>
+<blockquote>
+<p>C++程序设计发明者：我喜欢优雅和高效的代码。代码的逻辑应当直接了当。叫缺陷难以隐藏；尽量减少依赖关系，使之便于维护。根据某种分层战略完善错误处理代码。性能调制最优，省的引诱别人做没规矩的优化，搞出一堆混乱出来。整洁的代码只做好一件事。</p>
+</blockquote>
+</div></div><div class="post-main post-comment"></div></article><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.css"><script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script><script src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script><script>$(document).ready(function() {
+  $(".fancybox").fancybox();
+});
+</script></body></html>
